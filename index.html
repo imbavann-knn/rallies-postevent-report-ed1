@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACUVUE RALLIES 2026 — Post-Event Report</title>
+<meta property="og:title" content="ACUVUE RALLIES 2026 — Post-Event Report">
+<meta property="og:description" content="Singapore's first in-mall pickleball competition. Edition 01 results.">
+<meta property="og:image" content="assets/cover-kv.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+/* ============================================================
+   ACUVUE RALLIES 2026 — POST-EVENT REPORT
+   Brand: Rallies Black #0D0D0D | Neon Green #CAFF00 | Orange #F26522
+   Fonts: Barlow Condensed (display) | DM Sans (body)
+   ============================================================ */
+
+:root {
+  --black: #0D0D0D;
+  --green: #CAFF00;
+  --orange: #F26522;
+  --white: #FFFFFF;
+  --light: #F7F7F7;
+  --gray-100: #F0F0F0;
+  --gray-200: #E0E0E0;
+  --gray-300: #C0C0C0;
+  --gray-600: #666666;
+  --gray-800: #333333;
+  --green-dim: rgba(202,255,0,0.15);
+  --orange-dim: rgba(242,101,34,0.12);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--white);
+  color: var(--gray-800);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; line-height: 1.1; }
+.section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+.section-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 1rem; }
+.section-subtitle { font-size: 1.1rem; color: var(--gray-600); max-width: 640px; line-height: 1.5; }
+
+/* Layout */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 5rem 0; }
+.section-dark { background: var(--black); color: var(--white); }
+.section-dark .section-subtitle { color: var(--gray-300); }
+.section-light { background: var(--light); }
+
+/* Stat Cards */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+.stat-card { background: var(--white); border-radius: 16px; padding: 2rem 1.5rem; text-align: center; box-shadow: 0 2px 20px rgba(0,0,0,0.04); border: 1px solid var(--gray-200); transition: transform 0.2s; }
+.stat-card:hover { transform: translateY(-3px); }
+.stat-card .stat-number { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 800; line-height: 1; color: var(--black); }
+.stat-card .stat-number.green { color: var(--green); text-shadow: 0 0 20px rgba(202,255,0,0.3); }
+.stat-card .stat-label { font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+.stat-card .stat-source { font-size: 0.7rem; color: var(--gray-300); margin-top: 0.25rem; }
+
+/* Dark stat cards */
+.section-dark .stat-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+.section-dark .stat-card .stat-number { color: var(--green); }
+.section-dark .stat-card .stat-label { color: var(--gray-300); }
+
+/* Charts */
+.chart-container { position: relative; max-width: 600px; margin: 2rem auto; }
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+
+/* Photo Placeholders */
+.photo-placeholder {
+  background: linear-gradient(135deg, var(--black) 0%, #1a1a1a 50%, var(--black) 100%);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-600);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+  border: 1px dashed rgba(202,255,0,0.3);
+}
+.photo-placeholder::before {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: url('assets/logo-all-white.png') center/contain no-repeat;
+  opacity: 0.08;
+}
+.photo-placeholder .ph-label {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 1rem;
+  background: rgba(202,255,0,0.1);
+  border-radius: 4px;
+  color: var(--green);
+  font-size: 0.75rem;
+}
+
+/* Testimonial Quotes */
+.quote-card {
+  background: var(--light);
+  border-left: 4px solid var(--green);
+  border-radius: 0 12px 12px 0;
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+}
+.quote-card .quote-text { font-size: 1.05rem; font-style: italic; line-height: 1.6; color: var(--gray-800); }
+.quote-card .quote-attr { font-size: 0.85rem; color: var(--gray-600); margin-top: 0.75rem; font-weight: 600; }
+
+/* VIP Highlight */
+.vip-banner {
+  background: linear-gradient(135deg, #1a1a1a 0%, var(--black) 100%);
+  border: 1px solid rgba(202,255,0,0.2);
+  border-radius: 20px;
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin: 3rem 0;
+}
+.vip-banner img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  aspect-ratio: 16/10;
+}
+.vip-badge {
+  display: inline-block;
+  background: var(--green);
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Sponsor Cluster */
+.sponsor-cluster {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.sponsor-cluster-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid var(--gray-200);
+}
+.sponsor-cluster-card img {
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+.sponsor-cluster-card .mention-count {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--black);
+  line-height: 1;
+}
+
+/* Goodie Grid */
+.goodie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.goodie-item {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--gray-200);
+}
+.goodie-item img { width: 80px; height: 80px; object-fit: contain; }
+.goodie-item .goodie-name { font-size: 0.75rem; margin-top: 0.5rem; color: var(--gray-600); }
+
+/* Photo Grid */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* Timeline */
+.timeline { position: relative; margin: 3rem 0; padding-left: 2rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--green), var(--orange));
+  border-radius: 3px;
+}
+.timeline-item { position: relative; margin-bottom: 2rem; padding-left: 1.5rem; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 0.25rem;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 3px solid var(--black);
+  margin-left: -5px;
+}
+.timeline-date { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--green); font-size: 1.1rem; }
+.timeline-desc { font-size: 0.95rem; color: var(--gray-600); margin-top: 0.25rem; }
+
+/* NPS Gauge */
+.nps-gauge {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.nps-score {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 5rem;
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+}
+.nps-bar {
+  flex: 1;
+  height: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+}
+.nps-promoter { background: var(--green); }
+.nps-passive { background: var(--gray-200); }
+.nps-detractor { background: var(--orange); }
+
+/* Aspect Bars */
+.aspect-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.75rem 0;
+}
+.aspect-label { width: 180px; font-size: 0.9rem; font-weight: 500; flex-shrink: 0; }
+.aspect-bar-bg {
+  flex: 1;
+  height: 24px;
+  background: var(--gray-100);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.aspect-bar-fill {
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--green), #9ECC00);
+  transition: width 1s ease;
+}
+.aspect-score { width: 50px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.2rem; }
+
+/* Tables */
+.data-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
+.data-table th { background: var(--black); color: var(--green); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 0.75rem 1rem; text-align: left; }
+.data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--gray-200); }
+.data-table tr:nth-child(even) td { background: var(--gray-100); }
+
+/* Navigation / TOC */
+.toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 3rem 0; }
+.toc-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.toc-item:hover { border-color: var(--green); background: rgba(202,255,0,0.05); }
+.toc-num { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--green); }
+.toc-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 600; margin-top: 0.25rem; }
+.toc-desc { font-size: 0.8rem; color: var(--gray-600); margin-top: 0.25rem; }
+.section-dark .toc-desc { color: var(--gray-300); }
+
+/* Two-col layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+/* Tags / Pills */
+.tag { display: inline-block; background: var(--green-dim); color: #5a7a00; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; margin: 0.25rem 0.25rem 0.25rem 0; }
+.section-dark .tag { background: rgba(202,255,0,0.15); color: var(--green); }
+
+/* Divider */
+.divider { width: 60px; height: 4px; background: var(--green); border-radius: 2px; margin: 1.5rem 0; }
+.divider-orange { background: var(--orange); }
+
+/* Export button */
+.export-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--black);
+  color: var(--green);
+  border: 2px solid var(--green);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.export-btn:hover { background: var(--green); color: var(--black); }
+
+/* Scroll Animations */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Counter Animation */
+.count-up { font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   COVER PAGE
+   ============================================================ */
+.cover {
+  min-height: 100vh;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('assets/cover-kv.jpg') center/cover no-repeat;
+  opacity: 0.35;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.85) 60%, var(--black) 100%);
+}
+.cover-content {
+  position: relative;
+  z-index: 2;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+.cover-logo { height: 50px; margin-bottom: 2rem; }
+.cover-badge {
+  display: inline-block;
+  background: var(--green);
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.5rem 1.25rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+.cover h1 {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 0.95;
+  margin-bottom: 1rem;
+}
+.cover h1 span { color: var(--green); }
+.cover-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--gray-300);
+  font-weight: 400;
+  margin-bottom: 3rem;
+}
+.cover-stats {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.cover-stat { text-align: left; }
+.cover-stat-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+}
+.cover-stat-label {
+  font-size: 0.8rem;
+  color: var(--gray-300);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.25rem;
+}
+.cover-footer {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+.cover-footer-text { font-size: 0.8rem; color: var(--gray-600); }
+.cover-footer img { height: 24px; opacity: 0.5; }
+.cover-confidential {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   PRINT / PDF STYLES
+   ============================================================ */
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .export-btn { display: none !important; }
+  .page-break { break-before: page; }
+  section { padding: 2rem 0; }
+  .cover { min-height: auto; padding: 3rem 0; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .stat-card:hover { transform: none; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .two-col, .three-col, .chart-row { grid-template-columns: 1fr; }
+  .vip-banner { grid-template-columns: 1fr; padding: 2rem; }
+  .sponsor-cluster { grid-template-columns: 1fr; }
+  .cover-stats { gap: 1.5rem; }
+  .nps-gauge { flex-direction: column; text-align: center; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .toc { grid-template-columns: 1fr; }
+  .aspect-label { width: 120px; font-size: 0.8rem; }
+}
+
+@media (max-width: 375px) {
+  .container { padding: 0 1rem; }
+  section { padding: 3rem 0; }
+  .stat-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card { padding: 1.25rem 1rem; }
+  .stat-card .stat-number { font-size: 2.2rem; }
+  .cover h1 { font-size: 2.5rem; }
+  .cover-stat-num { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     EXPORT BUTTON
+     ============================================================ -->
+<button class="export-btn" onclick="exportPDF()" title="Export as PDF">EXPORT PDF</button>
+
+<!-- ============================================================
+     COVER PAGE
+     ============================================================ -->
+<section class="cover" id="cover">
+  <div class="cover-content">
+    <div class="cover-confidential">Confidential — For Sponsor & Internal Use Only</div>
+    <img src="assets/logo-white-orange.png" alt="Rallies Pickleball logo" class="cover-logo">
+    <div class="cover-badge">Post-Event Report — Edition 01</div>
+    <h1>ACUVUE<br>RALLIES <span>2026</span></h1>
+    <p class="cover-sub">Singapore's First In-Mall Pickleball Competition &nbsp;|&nbsp; 1 – 12 April 2026</p>
+
+    <div class="cover-stats">
+      <div class="cover-stat">
+        <div class="cover-stat-num count-up" data-target="5200000" data-suffix="+" data-format="abbr">0</div>
+        <div class="cover-stat-label">Total Reach</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">SGD <span class="count-up" data-target="220" data-suffix="K+">0</span></div>
+        <div class="cover-stat-label">Media Value</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num count-up" data-target="278" data-suffix="">0</div>
+        <div class="cover-stat-label">Players</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num count-up" data-target="36" data-suffix="">0</div>
+        <div class="cover-stat-label">Teams</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">+<span class="count-up" data-target="26" data-suffix="">0</span></div>
+        <div class="cover-stat-label">NPS Score</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-footer-text">rallies.elitez.asia &nbsp;|&nbsp; @rallies.asia</div>
+    <img src="assets/acuvue-logo-white.png" alt="ACUVUE logo">
+  </div>
+</section>
+
+<!-- ============================================================
+     TABLE OF CONTENTS
+     ============================================================ -->
+<section class="section-dark page-break" id="toc">
+  <div class="container">
+    <div class="section-label">Contents Overview</div>
+    <h2 class="section-title" style="color:var(--white)">What This Report Covers</h2>
+    <div class="toc">
+      <a href="#exec-summary" class="toc-item">
+        <div class="toc-num">01</div>
+        <div class="toc-title">Executive Summary</div>
+        <div class="toc-desc">The headline numbers</div>
+      </a>
+      <a href="#event-overview" class="toc-item">
+        <div class="toc-num">02</div>
+        <div class="toc-title">Event Overview & Brand Story</div>
+        <div class="toc-desc">What Rallies is and why it matters now</div>
+      </a>
+      <a href="#player-pool" class="toc-item">
+        <div class="toc-num">03</div>
+        <div class="toc-title">Player Pool Breakdown</div>
+        <div class="toc-desc">Who played — demographics, profile, community</div>
+      </a>
+      <a href="#eyeballs" class="toc-item">
+        <div class="toc-num">04</div>
+        <div class="toc-title">Eyeballs & Reach</div>
+        <div class="toc-desc">On-ground, digital, and media audience</div>
+      </a>
+      <a href="#community-buzz" class="toc-item">
+        <div class="toc-num">05</div>
+        <div class="toc-title">Community Buzz</div>
+        <div class="toc-desc">NPS, testimonials, satisfaction data</div>
+      </a>
+      <a href="#online-buzz" class="toc-item">
+        <div class="toc-num">06</div>
+        <div class="toc-title">Online Buzz</div>
+        <div class="toc-desc">Social content, UGC, influencer reach</div>
+      </a>
+      <a href="#sponsor-visibility" class="toc-item">
+        <div class="toc-num">07</div>
+        <div class="toc-title">Sponsor Visibility Report</div>
+        <div class="toc-desc">Brand touchpoints, impressions, recall</div>
+      </a>
+      <a href="#growth-story" class="toc-item">
+        <div class="toc-num">08</div>
+        <div class="toc-title">The Rallies Growth Story</div>
+        <div class="toc-desc">Forward-looking pitch for bigger sponsorship</div>
+      </a>
+      <a href="#appendix" class="toc-item">
+        <div class="toc-num">09</div>
+        <div class="toc-title">Appendix</div>
+        <div class="toc-desc">Raw data, photos, survey results</div>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ============================================================
+     SECTION 01 — EXECUTIVE SUMMARY
+     ============================================================ -->
+<section class="section-light page-break" id="exec-summary">
+  <div class="container">
+    <div class="section-label reveal">Section 01</div>
+    <h2 class="section-title reveal">Executive Summary</h2>
+    <p class="section-subtitle reveal">ACUVUE RALLIES 2026 delivered Singapore's first in-mall pickleball competition — 12 days of sport, community, and brand activation across Singapore EXPO and Plaza Singapura.</p>
+    <div class="divider reveal"></div>
+
+    <div class="stat-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number count-up" data-target="5200000" data-suffix="+" data-format="abbr">0</div>
+        <div class="stat-label">Total Campaign Reach</div>
+        <div class="stat-source">PR + Digital + On-ground</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">SGD <span class="count-up" data-target="220" data-suffix="K+">0</span></div>
+        <div class="stat-label">Earned Media Value</div>
+        <div class="stat-source">PR + Digital combined</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number count-up" data-target="278" data-suffix="">0</div>
+        <div class="stat-label">Registered Players</div>
+        <div class="stat-source">Players CSV</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number count-up" data-target="7000" data-suffix="+">0</div>
+        <div class="stat-label">On-Ground Engagements</div>
+        <div class="stat-source">7-day activation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+<span class="count-up" data-target="26" data-suffix="">0</span></div>
+        <div class="stat-label">NPS Score</div>
+        <div class="stat-source">Post-event survey, n=27</div>
+      </div>
+    </div>
+
+    <!-- ACUVUE Title Sponsor Showcase -->
+    <div style="margin-top:3rem;" class="reveal">
+      <div style="background:var(--black); border-radius:20px; padding:3rem; text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--green); margin-bottom:1rem;">Title Sponsor</div>
+        <div class="photo-placeholder" style="min-height:100px; max-width:300px; margin:0 auto 1.5rem auto; border-radius:12px;">
+          <span class="ph-label">ACUVUE Logo — Full Colour</span>
+        </div>
+        <p style="color:var(--gray-300); max-width:600px; margin:0 auto; font-size:0.95rem;">100% content tagging &bull; Naming rights &bull; Full brand journey integration &bull; 5.2M+ campaign reach</p>
+      </div>
+    </div>
+
+    <!-- Hero Photo Placeholder -->
+    <div class="photo-placeholder reveal" style="margin-top:2.5rem; min-height:400px;">
+      <span class="ph-label">Hero Shot — Grand Finals Atrium, Plaza Singapura</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 02 — EVENT OVERVIEW
+     ============================================================ -->
+<section class="section-dark page-break" id="event-overview">
+  <div class="container">
+    <div class="section-label reveal">Section 02</div>
+    <h2 class="section-title reveal" style="color:var(--white)">Event Overview &amp; Brand Story</h2>
+    <p class="section-subtitle reveal">Pickleball is the fastest-growing sport in Southeast Asia. ACUVUE RALLIES tapped into that momentum to create a first-of-its-kind competitive league that merges grassroots community with premium brand activation — all inside a high-traffic retail destination.</p>
+    <div class="divider reveal"></div>
+
+    <div class="two-col reveal" style="margin-top:3rem;">
+      <div>
+        <h3 style="font-size:1.6rem; color:var(--white); margin-bottom:1rem;">The Rallies Concept</h3>
+        <p style="color:var(--gray-300); margin-bottom:1rem;">Rallies is a community-first competitive pickleball platform that brings together grassroots "Kampong Kaki" players and corporate teams. Edition 01 featured 278 players across 36 teams competing in group stages at Singapore EXPO before Grand Finals at the iconic Plaza Singapura Level 1 Atrium.</p>
+        <p style="color:var(--gray-300); margin-bottom:1rem;">By staging finals in a mall atrium, ACUVUE RALLIES reached beyond the sport's core audience — converting casual shoppers into spectators and brand engagers. Peak concurrent spectator count exceeded 350 during the Grand Finals.</p>
+        <h4 style="font-size:1.1rem; color:var(--green); margin-top:2rem; margin-bottom:0.5rem;">Why It Matters Now</h4>
+        <p style="color:var(--gray-300);">Singapore's pickleball community has grown exponentially. ACUVUE RALLIES positions the brand at the intersection of wellness, active lifestyle, and community — reaching a highly desirable working-age demographic (84.9% aged 25-54).</p>
+      </div>
+      <div>
+        <div class="photo-placeholder" style="min-height:350px;">
+          <span class="ph-label">Event Atmosphere — Atrium Crowd Shot</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Timeline -->
+    <h3 style="font-size:1.6rem; color:var(--white); margin-top:4rem; margin-bottom:0.5rem;" class="reveal">Event Timeline</h3>
+    <div class="divider reveal"></div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-date">1 April 2026</div>
+        <div class="timeline-desc" style="color:var(--gray-300);">Competition opens at Singapore EXPO — Group stages begin across multiple courts</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">6 April 2026</div>
+        <div class="timeline-desc" style="color:var(--gray-300);">Media Day launch at Plaza Singapura — Official campaign kickoff with press and KOLs</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">6 – 10 April 2026</div>
+        <div class="timeline-desc" style="color:var(--gray-300);">Daily activations at Plaza Singapura — Pickleball clinics, sponsor booths, consumer engagement</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">11 April 2026</div>
+        <div class="timeline-desc" style="color:var(--gray-300);">Official opening by Mayor Denise Phua (Central CDC) + Celebrity KOL exhibition match featuring SGAG Xiao Ming, Samantha, Yes 933 DJ Yurong, and Jamie Teo</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">11 – 12 April 2026</div>
+        <div class="timeline-desc" style="color:var(--gray-300);">Grand Finals at Plaza Singapura Level 1 Atrium — Kampong Kaki and Corporate category finals, prize ceremony</div>
+      </div>
+    </div>
+
+    <!-- Venue Details -->
+    <div class="two-col reveal" style="margin-top:3rem;">
+      <div>
+        <h3 style="font-size:1.4rem; color:var(--white); margin-bottom:1rem;">Venue: Plaza Singapura</h3>
+        <p style="color:var(--gray-300); margin-bottom:1rem;">Level 1 Atrium — one of Singapore's highest-footfall retail spaces. The 7-day activation included competition courts, sponsor experience zones, and spectator areas.</p>
+        <p style="color:var(--gray-300);">Mall communications delivered an estimated reach of over 1.5 million through standees, lift posters, lightboxes, wall stickers, bannerettes, digital screens, campaign microsite, social media, and wobblers.</p>
+        <div style="margin-top:1.5rem;">
+          <div class="stat-card" style="display:inline-block; padding:1.25rem 1.5rem;">
+            <div class="stat-number" style="font-size:2rem; color:var(--green);">&gt;$900K</div>
+            <div class="stat-label">Plaza Singapura PR Value</div>
+            <div class="stat-source">As of 12 Apr</div>
+          </div>
+          <div class="stat-card" style="display:inline-block; padding:1.25rem 1.5rem; margin-left:1rem;">
+            <div class="stat-number" style="font-size:2rem; color:var(--green);">6.74M</div>
+            <div class="stat-label">Est. Reach (PS)</div>
+          </div>
+        </div>
+      </div>
+      <div class="photo-placeholder" style="min-height:300px;">
+        <span class="ph-label">Plaza Singapura Atrium Setup</span>
+      </div>
+    </div>
+
+    <!-- VIP Mayor Banner -->
+    <div class="vip-banner reveal">
+      <div class="photo-placeholder" style="min-height:250px; border-radius:12px;">
+        <span class="ph-label">Mayor Denise Phua — Opening Address, 11 April</span>
+      </div>
+      <div>
+        <div class="vip-badge">VIP Guest of Honour</div>
+        <h3 style="font-size:1.8rem; color:var(--white); margin-bottom:1rem;">Mayor Denise Phua</h3>
+        <p style="color:var(--gray-300); margin-bottom:1rem;">Central CDC Mayor Denise Phua officiated the opening of ACUVUE RALLIES on 11 April 2026, delivering the opening address before the Grand Finals weekend.</p>
+        <p style="color:var(--gray-300);">Her participation signifies strong community engagement and government endorsement — validating pickleball as a legitimate community sport platform and elevating the event's profile among stakeholders and media.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 03 — PLAYER POOL
+     ============================================================ -->
+<section class="section-light page-break" id="player-pool">
+  <div class="container">
+    <div class="section-label reveal">Section 03</div>
+    <h2 class="section-title reveal">Player Pool Breakdown</h2>
+    <p class="section-subtitle reveal">278 players across 36 teams — a compelling mix of grassroots community and corporate Singapore. The working-age demographic (25-54) makes up 84.9% of all players.</p>
+    <div class="divider reveal"></div>
+
+    <!-- Volume Stats -->
+    <div class="stat-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number count-up" data-target="278">0</div>
+        <div class="stat-label">Total Players</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number count-up" data-target="36">0</div>
+        <div class="stat-label">Teams</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number count-up" data-target="16">0</div>
+        <div class="stat-label">Kampong Kaki Teams</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number count-up" data-target="20">0</div>
+        <div class="stat-label">Corporate Teams</div>
+      </div>
+    </div>
+
+    <div class="chart-row reveal" style="margin-top:3rem;">
+      <!-- Age Band Doughnut Chart -->
+      <div>
+        <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Age Distribution</h3>
+        <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">84.9% of players are working-age adults (25-54)</p>
+        <div class="chart-container" style="max-width:350px;">
+          <canvas id="chartAgeBand"></canvas>
+        </div>
+      </div>
+
+      <!-- Gender & Category Split -->
+      <div>
+        <h3 style="font-size:1.4rem; margin-bottom:1rem;">Gender Split</h3>
+        <div class="aspect-row">
+          <div class="aspect-label">Male</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:60.8%;"></div>
+          </div>
+          <div class="aspect-score">60.8%</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label">Female</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:39.2%; background:linear-gradient(90deg, var(--orange), #ff8844);"></div>
+          </div>
+          <div class="aspect-score">39.2%</div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--gray-600); margin-top:0.5rem;">169 male &bull; 109 female</p>
+
+        <h3 style="font-size:1.4rem; margin-top:2.5rem; margin-bottom:1rem;">Category Split</h3>
+        <div class="aspect-row">
+          <div class="aspect-label">Corporate</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:54.3%;"></div>
+          </div>
+          <div class="aspect-score">151</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label">Kampong Kaki</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:45.7%; background:linear-gradient(90deg, var(--orange), #ff8844);"></div>
+          </div>
+          <div class="aspect-score">127</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Corporate Teams -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:1rem;">Corporate Teams Represented</h3>
+      <p style="font-size:0.9rem; color:var(--gray-600); margin-bottom:1rem;">20 corporate teams spanning government, MNCs, and universities.</p>
+      <div>
+        <span class="tag">ACUVUE Dinkers</span>
+        <span class="tag">Team EY</span>
+        <span class="tag">HTX Vanguard</span>
+        <span class="tag">SPaddle Power (SP Group)</span>
+        <span class="tag">SportSG</span>
+        <span class="tag">Rider Levett Bucknall</span>
+        <span class="tag">Ignite TOVA</span>
+        <span class="tag">PickleBoners</span>
+      </div>
+      <p style="font-size:0.8rem; color:var(--gray-600); margin-top:1rem;"><strong>Notable organisations:</strong> Government (MOM, MOE, HTX) &bull; Corporates (EY, SP Group) &bull; Universities (NTU)</p>
+    </div>
+
+    <!-- Experience Breakdown Photo -->
+    <div class="photo-placeholder reveal" style="margin-top:2.5rem; min-height:250px;">
+      <span class="ph-label">Player Action Shots — Group Stages at Singapore EXPO</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 04 — EYEBALLS & REACH
+     ============================================================ -->
+<section class="section-dark page-break" id="eyeballs">
+  <div class="container">
+    <div class="section-label reveal">Section 04</div>
+    <h2 class="section-title reveal" style="color:var(--white)">Eyeballs &amp; Reach</h2>
+    <p class="section-subtitle reveal">5.2 million+ total campaign reach — spanning on-ground spectators, digital platforms, and mainstream media coverage.</p>
+    <div class="divider reveal"></div>
+
+    <!-- Three-column stat blocks -->
+    <div class="three-col reveal" style="margin-top:3rem;">
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:2rem; text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--orange); margin-bottom:1.5rem;">On-Ground</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:3rem; font-weight:800; color:var(--green); line-height:1;" class="count-up" data-target="7000" data-suffix="+">0</div>
+        <div style="font-size:0.85rem; color:var(--gray-300); margin-top:0.5rem;">Total Engagements</div>
+        <div style="width:40px; height:2px; background:var(--green); margin:1rem auto;"></div>
+        <div style="font-size:0.85rem; color:var(--gray-300);">350+ peak concurrent spectators</div>
+        <div style="font-size:0.85rem; color:var(--gray-300); margin-top:0.25rem;">7-day activation at Plaza Singapura</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:2rem; text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--orange); margin-bottom:1.5rem;">Digital</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:3rem; font-weight:800; color:var(--green); line-height:1;">112K+</div>
+        <div style="font-size:0.85rem; color:var(--gray-300); margin-top:0.5rem;">Total Digital Reach</div>
+        <div style="width:40px; height:2px; background:var(--green); margin:1rem auto;"></div>
+        <div style="font-size:0.85rem; color:var(--gray-300);">177K+ content views</div>
+        <div style="font-size:0.85rem; color:var(--gray-300); margin-top:0.25rem;">20 KOLs (277K combined following)</div>
+        <div style="font-size:0.85rem; color:var(--gray-300); margin-top:0.25rem;">66K+ UGC reach</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:2rem; text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--orange); margin-bottom:1.5rem;">Media / PR</div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:3rem; font-weight:800; color:var(--green); line-height:1;">5.1M</div>
+        <div style="font-size:0.85rem; color:var(--gray-300); margin-top:0.5rem;">Adjusted PR Reach</div>
+        <div style="width:40px; height:2px; background:var(--green); margin:1rem auto;"></div>
+        <div style="font-size:0.85rem; color:var(--gray-300);">22 media features</div>
+        <div style="font-size:0.85rem; color:var(--gray-300); margin-top:0.25rem;">16.7M circulation &bull; SGD 219K PR value</div>
+      </div>
+    </div>
+
+    <!-- Reach Breakdown Chart -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; color:var(--white); margin-bottom:1rem;">Reach Breakdown</h3>
+      <div class="chart-container" style="max-width:700px;">
+        <canvas id="chartReachBreakdown"></canvas>
+      </div>
+    </div>
+
+    <div class="photo-placeholder reveal" style="margin-top:2.5rem; min-height:250px;">
+      <span class="ph-label">Media Day — 6 April, Press & KOL Coverage</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 05 — COMMUNITY BUZZ
+     ============================================================ -->
+<section class="section-light page-break" id="community-buzz">
+  <div class="container">
+    <div class="section-label reveal">Section 05</div>
+    <h2 class="section-title reveal">Community Buzz</h2>
+    <p class="section-subtitle reveal">Player sentiment, satisfaction data, and testimonials from ACUVUE RALLIES 2026's inaugural edition. Survey data from n=27 post-event respondents.</p>
+    <div class="divider reveal"></div>
+
+    <!-- NPS Gauge -->
+    <div class="reveal" style="margin-top:2.5rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:1.5rem;">Net Promoter Score</h3>
+      <div class="nps-gauge">
+        <div>
+          <div class="nps-score">+26</div>
+          <div style="font-size:0.85rem; color:var(--gray-600);">NPS Score</div>
+        </div>
+        <div style="flex:1;">
+          <div class="nps-bar">
+            <div class="nps-promoter" style="width:52%;" title="Promoters 52%"></div>
+            <div class="nps-passive" style="width:22%;" title="Passives 22%"></div>
+            <div class="nps-detractor" style="width:26%;" title="Detractors 26%"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--gray-600); margin-top:0.5rem;">
+            <span>Promoters: 14 (52%)</span>
+            <span>Passives: 6 (22%)</span>
+            <span>Detractors: 7 (26%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-row reveal" style="margin-top:3rem;">
+      <!-- Aspect Ratings -->
+      <div>
+        <h3 style="font-size:1.4rem; margin-bottom:1.5rem;">Aspect Ratings <span style="font-size:0.85rem; font-weight:400; color:var(--gray-600);">(out of 5)</span></h3>
+        <div class="aspect-row">
+          <div class="aspect-label">Goodie Bag</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:86%;"></div>
+          </div>
+          <div class="aspect-score">4.30</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label">Atmosphere</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:83%;"></div>
+          </div>
+          <div class="aspect-score">4.15</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label">Staff</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:76.2%;"></div>
+          </div>
+          <div class="aspect-score">3.81</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label">Organisation</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:67.4%;"></div>
+          </div>
+          <div class="aspect-score">3.37</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label">Match Format</div>
+          <div class="aspect-bar-bg">
+            <div class="aspect-bar-fill" style="width:67.4%;"></div>
+          </div>
+          <div class="aspect-score">3.37</div>
+        </div>
+      </div>
+
+      <!-- Return Intent + Community Discovery -->
+      <div>
+        <h3 style="font-size:1.4rem; margin-bottom:1rem;">Return Intent</h3>
+        <div style="display:flex; align-items:center; gap:1.5rem; margin-bottom:1.5rem;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:4rem; font-weight:800; color:var(--green); line-height:1;">74%</div>
+          <div style="font-size:0.9rem; color:var(--gray-600);">would return for<br>a future edition</div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--gray-600);">Definitely Yes: 10 &bull; Probably Yes: 10 &bull; Not Sure: 6 &bull; Probably Not: 1</p>
+
+        <div style="margin-top:2rem;">
+          <h3 style="font-size:1.4rem; margin-bottom:1rem;">Community Discovery</h3>
+          <div style="display:flex; align-items:center; gap:1.5rem;">
+            <div style="font-family:'Barlow Condensed',sans-serif; font-size:4rem; font-weight:800; color:var(--green); line-height:1;">93%</div>
+            <div style="font-size:0.9rem; color:var(--gray-600);">discovered new players<br>or communities</div>
+          </div>
+          <p style="font-size:0.8rem; color:var(--gray-600); margin-top:0.5rem;">25 out of 27 respondents</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discovery Channels Chart -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:1rem;">How Players Discovered Rallies</h3>
+      <div class="chart-container" style="max-width:400px;">
+        <canvas id="chartDiscovery"></canvas>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:1.5rem;">Player Testimonials</h3>
+
+      <div class="quote-card">
+        <div class="quote-text">"Really great experience! First time playing in a mall and the atrium of spectators made it that much more exciting! Very well organised event and kudos to the team!"</div>
+        <div class="quote-attr">— Anonymous, Kampong Kaki &bull; NPS 10</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-text">"Rallies delivered a great player experience, with goody bags, thoughtful gifts, and attractive prizes that left every participant going home happy."</div>
+        <div class="quote-attr">— Christina, Pickle Parade &bull; NPS 10</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-text">"Thanks for organising this event, a lot of things done well for a first edition really. Looking forward to see an improved edition in the future."</div>
+        <div class="quote-attr">— Anonymous, Kampong Kaki &bull; NPS 8</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-text">"Having the finals in Plaza Singapura is a great highlight... playing in a mall instead of a traditional sports centre adds vibe, fun and excitement!"</div>
+        <div class="quote-attr">— Team EY, Corporate &bull; NPS 5</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-text">"The turn out for the event, and the social media publicity it's tastefully partnered between organiser and influencers. Keep it Up!"</div>
+        <div class="quote-attr">— Craig Chan, PickleBoners, Corporate &bull; NPS 8</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 06 — ONLINE BUZZ
+     ============================================================ -->
+<section class="section-dark page-break" id="online-buzz">
+  <div class="container">
+    <div class="section-label reveal">Section 06</div>
+    <h2 class="section-title reveal" style="color:var(--white)">Online Buzz</h2>
+    <p class="section-subtitle reveal">Instagram performance, website analytics, social listening data, and KOL activations across ACUVUE RALLIES 2026.</p>
+    <div class="divider reveal"></div>
+
+    <!-- Instagram Insights -->
+    <h3 style="font-size:1.6rem; color:var(--white); margin-top:3rem; margin-bottom:0.5rem;" class="reveal">@rallies.asia — Instagram Insights</h3>
+    <div class="divider reveal"></div>
+    <div class="stat-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">344K</div>
+        <div class="stat-label">Total Views (90d)</div>
+        <div class="stat-source">95.5% organic</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">45.4K</div>
+        <div class="stat-label">Accounts Reached</div>
+        <div class="stat-source">70.8% non-followers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">3.9K</div>
+        <div class="stat-label">Interactions</div>
+        <div class="stat-source">22 Mar – 20 Apr</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">639</div>
+        <div class="stat-label">New Followers</div>
+        <div class="stat-source">Campaign period</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">332</div>
+        <div class="stat-label">Content Shared</div>
+        <div class="stat-source">Saves + shares</div>
+      </div>
+    </div>
+
+    <!-- Top Posts + Content Mix -->
+    <div class="two-col reveal" style="margin-top:3rem;">
+      <div>
+        <h3 style="font-size:1.4rem; color:var(--white); margin-bottom:1rem;">Top-Performing Posts</h3>
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Views</th></tr></thead>
+          <tbody>
+            <tr><td>6 Apr (Media Day)</td><td style="font-weight:700; color:var(--green);">12,000</td></tr>
+            <tr><td>8 Apr</td><td style="font-weight:700; color:var(--green);">9,900</td></tr>
+            <tr><td>8 Apr</td><td style="font-weight:700; color:var(--green);">9,300</td></tr>
+            <tr><td>7 Apr</td><td style="font-weight:700; color:var(--green);">8,100</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="font-size:1.4rem; color:var(--white); margin-bottom:1rem;">Content Type Mix</h3>
+        <div class="aspect-row" style="margin-top:1rem;">
+          <div class="aspect-label" style="color:var(--gray-300);">Stories</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:48.9%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">48.9%</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label" style="color:var(--gray-300);">Posts</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:33.5%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">33.5%</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label" style="color:var(--gray-300);">Reels</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:17.5%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">17.5%</div>
+        </div>
+        <div style="margin-top:1.5rem;">
+          <h4 style="font-size:1rem; color:var(--white); margin-bottom:0.5rem;">Hashtag Performance</h4>
+          <span class="tag">#acuvuerallies — 100+ posts</span>
+          <span class="tag">#acuvuerallies2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Website GA -->
+    <h3 style="font-size:1.6rem; color:var(--white); margin-top:4rem; margin-bottom:0.5rem;" class="reveal">Website Analytics — rallies.elitez.asia</h3>
+    <p style="font-size:0.8rem; color:var(--gray-600); margin-bottom:0.5rem;" class="reveal">Google Analytics &bull; 21 Jan – 20 Apr 2026</p>
+    <div class="divider reveal"></div>
+    <div class="stat-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">15K</div>
+        <div class="stat-label">Active Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">14K</div>
+        <div class="stat-label">New Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">23K</div>
+        <div class="stat-label">Page Views</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">19s</div>
+        <div class="stat-label">Avg Engagement</div>
+      </div>
+    </div>
+
+    <div class="two-col reveal" style="margin-top:2rem;">
+      <div>
+        <h4 style="font-size:1.1rem; color:var(--white); margin-bottom:0.75rem;">Traffic Sources (Sessions)</h4>
+        <div class="aspect-row">
+          <div class="aspect-label" style="color:var(--gray-300);">Direct</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:100%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">8,000</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label" style="color:var(--gray-300);">Referral</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:90%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">7,200</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label" style="color:var(--gray-300);">Organic Search</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:25%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">2,000</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label" style="color:var(--gray-300);">Organic Social</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:17.5%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">1,400</div>
+        </div>
+        <div class="aspect-row">
+          <div class="aspect-label" style="color:var(--gray-300);">Paid Social</div>
+          <div class="aspect-bar-bg"><div class="aspect-bar-fill" style="width:10.5%;"></div></div>
+          <div class="aspect-score" style="color:var(--white);">836</div>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:1.1rem; color:var(--white); margin-bottom:0.75rem;">Key Conversions</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="stat-card" style="padding:1.25rem;">
+            <div class="stat-number" style="font-size:2rem;">319</div>
+            <div class="stat-label">File Downloads</div>
+          </div>
+          <div class="stat-card" style="padding:1.25rem;">
+            <div class="stat-number" style="font-size:2rem;">197</div>
+            <div class="stat-label">Form Starts</div>
+          </div>
+          <div class="stat-card" style="padding:1.25rem;">
+            <div class="stat-number" style="font-size:2rem;">9.9K</div>
+            <div class="stat-label">SG Users (66%)</div>
+          </div>
+          <div class="stat-card" style="padding:1.25rem;">
+            <div class="stat-number" style="font-size:2rem;">14K</div>
+            <div class="stat-label">First Visits</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Listening -->
+    <h3 style="font-size:1.6rem; color:var(--white); margin-top:4rem; margin-bottom:0.5rem;" class="reveal">Social Listening Summary</h3>
+    <div class="divider reveal"></div>
+    <div class="stat-grid reveal" style="grid-template-columns:repeat(4, 1fr);">
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">1,069</div>
+        <div class="stat-label">Items Tracked</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">85</div>
+        <div class="stat-label">Unique Outlets</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">68</div>
+        <div class="stat-label">Instagram</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:2.5rem;">54</div>
+        <div class="stat-label">Facebook</div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem; color:var(--gray-600); margin-top:0.75rem;" class="reveal">Platform mix: Instagram 68 &bull; Facebook 54 &bull; LinkedIn 7 &bull; X 1</p>
+
+    <!-- KOL Grid -->
+    <h3 style="font-size:1.6rem; color:var(--white); margin-top:4rem; margin-bottom:0.5rem;" class="reveal">KOL / Influencer Activations</h3>
+    <div class="divider reveal"></div>
+    <div class="reveal" style="margin-top:1.5rem;">
+      <p style="color:var(--gray-300); margin-bottom:1rem;">20 KOLs activated with a combined following of 277K. Celebrity KOL exhibition match featured high-profile talent.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:1.5rem; text-align:center;">
+          <div class="photo-placeholder" style="min-height:120px; border-radius:8px; margin-bottom:0.75rem;">
+            <span class="ph-label">@jimenamuchsel</span>
+          </div>
+          <div style="font-size:0.85rem; color:var(--white); font-weight:600;">Jimena Muchsel</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:1.5rem; text-align:center;">
+          <div class="photo-placeholder" style="min-height:120px; border-radius:8px; margin-bottom:0.75rem;">
+            <span class="ph-label">@njltheawesome</span>
+          </div>
+          <div style="font-size:0.85rem; color:var(--white); font-weight:600;">NJL</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:1.5rem; text-align:center;">
+          <div class="photo-placeholder" style="min-height:120px; border-radius:8px; margin-bottom:0.75rem;">
+            <span class="ph-label">@joshuaheejd</span>
+          </div>
+          <div style="font-size:0.85rem; color:var(--white); font-weight:600;">Joshua Hee</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:1.5rem; text-align:center;">
+          <div class="photo-placeholder" style="min-height:120px; border-radius:8px; margin-bottom:0.75rem;">
+            <span class="ph-label">@mai_zhiqiii</span>
+          </div>
+          <div style="font-size:0.85rem; color:var(--white); font-weight:600;">Mai Zhiqi</div>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <h4 style="font-size:1rem; color:var(--white); margin-bottom:0.5rem;">Celebrity KOL Exhibition Match</h4>
+        <span class="tag">SGAG Xiao Ming</span>
+        <span class="tag">Samantha</span>
+        <span class="tag">Yes 933 DJ Yurong</span>
+        <span class="tag">Jamie Teo</span>
+      </div>
+      <p style="font-size:0.8rem; color:var(--gray-600); margin-top:1rem;">Additional channels: CapitaStar EDM + push notifications &bull; XiaoHongShu cross-posting</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 07 — SPONSOR VISIBILITY
+     ============================================================ -->
+<section class="section-light page-break" id="sponsor-visibility">
+  <div class="container">
+    <div class="section-label reveal">Section 07</div>
+    <h2 class="section-title reveal">Sponsor Visibility Report</h2>
+    <p class="section-subtitle reveal">Unaided sponsor recall, brand touchpoints, goodie bag contents, and earned media value across all ACUVUE RALLIES activations.</p>
+    <div class="divider reveal"></div>
+
+    <!-- Top 3 Sponsor Recall Cluster -->
+    <h3 style="font-size:1.4rem; margin-top:3rem; margin-bottom:0.5rem;" class="reveal">Top Sponsor Recognition</h3>
+    <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1.5rem;" class="reveal">Unaided recall — respondents named brands without prompting (n=27)</p>
+
+    <div class="sponsor-cluster reveal">
+      <div class="sponsor-cluster-card" style="border-top:4px solid var(--green);">
+        <div class="photo-placeholder" style="min-height:60px; border-radius:8px; margin-bottom:1rem;">
+          <span class="ph-label">ACUVUE Logo</span>
+        </div>
+        <div class="mention-count">9</div>
+        <div style="font-size:0.8rem; color:var(--gray-600); margin-top:0.25rem;">unaided mentions</div>
+        <div style="font-size:0.7rem; color:var(--green); margin-top:0.5rem; font-weight:600;">TITLE SPONSOR</div>
+      </div>
+      <div class="sponsor-cluster-card" style="border-top:4px solid var(--orange);">
+        <div class="photo-placeholder" style="min-height:60px; border-radius:8px; margin-bottom:1rem;">
+          <span class="ph-label">Guzman y Gomez Logo</span>
+        </div>
+        <div class="mention-count">12</div>
+        <div style="font-size:0.8rem; color:var(--gray-600); margin-top:0.25rem;">unaided mentions</div>
+      </div>
+      <div class="sponsor-cluster-card" style="border-top:4px solid #0099cc;">
+        <div class="photo-placeholder" style="min-height:60px; border-radius:8px; margin-bottom:1rem;">
+          <span class="ph-label">H-TWO-O Logo</span>
+        </div>
+        <div class="mention-count">10</div>
+        <div style="font-size:0.8rem; color:var(--gray-600); margin-top:0.25rem;">unaided mentions</div>
+      </div>
+    </div>
+    <p style="font-size:0.75rem; color:var(--gray-600); font-style:italic; margin-top:0.5rem;" class="reveal">H-TWO-O and Guzman y Gomez had physical product sampling on-site which naturally enhances unaided recall. ACUVUE's title integration runs deeper — 100% content tagging, naming rights, and full brand journey integration.</p>
+
+    <!-- Full Recall Bar Chart -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:1rem;">Full Sponsor Recall (Unaided)</h3>
+      <div class="chart-container" style="max-width:700px;">
+        <canvas id="chartSponsorRecall"></canvas>
+      </div>
+    </div>
+
+    <!-- Brand Placement Inventory -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:1rem;">Brand Placement Inventory — Plaza Singapura</h3>
+      <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Estimated reach: &gt;1.5 million across all mall communications</p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+        <span class="tag">Standees</span>
+        <span class="tag">Lift Posters</span>
+        <span class="tag">Lightboxes</span>
+        <span class="tag">Wall Stickers</span>
+        <span class="tag">Bannerettes</span>
+        <span class="tag">Digital Screens</span>
+        <span class="tag">Campaign Microsite</span>
+        <span class="tag">Social Media</span>
+        <span class="tag">Wobblers</span>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <h4 style="font-size:1rem; margin-bottom:0.5rem;">Paid Publicity</h4>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+          <span class="tag">Digital Straits Times (24 Mar)</span>
+          <span class="tag">Nylon SG (1 Apr)</span>
+          <span class="tag">AugustMan (7 Apr)</span>
+          <span class="tag">HerWorld (8 Apr)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Goodie Bag Grid -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:0.5rem;">Goodie Bag Contents</h3>
+      <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;">Rated 4.30/5 by players — the highest-scoring aspect of the event.</p>
+      <div class="goodie-grid">
+        <div class="goodie-item">
+          <div class="photo-placeholder" style="min-height:80px; border-radius:8px;">
+            <span class="ph-label" style="font-size:0.6rem;">ACUVUE</span>
+          </div>
+          <div class="goodie-name">ACUVUE</div>
+        </div>
+        <div class="goodie-item">
+          <div class="photo-placeholder" style="min-height:80px; border-radius:8px;">
+            <span class="ph-label" style="font-size:0.6rem;">GYG Voucher</span>
+          </div>
+          <div class="goodie-name">Guzman y Gomez</div>
+        </div>
+        <div class="goodie-item">
+          <div class="photo-placeholder" style="min-height:80px; border-radius:8px;">
+            <span class="ph-label" style="font-size:0.6rem;">H-TWO-O</span>
+          </div>
+          <div class="goodie-name">H-TWO-O</div>
+        </div>
+        <div class="goodie-item">
+          <div class="photo-placeholder" style="min-height:80px; border-radius:8px;">
+            <span class="ph-label" style="font-size:0.6rem;">Determinant</span>
+          </div>
+          <div class="goodie-name">Determinant</div>
+        </div>
+        <div class="goodie-item">
+          <div class="photo-placeholder" style="min-height:80px; border-radius:8px;">
+            <span class="ph-label" style="font-size:0.6rem;">Spectacle Hut</span>
+          </div>
+          <div class="goodie-name">Spectacle Hut</div>
+        </div>
+        <div class="goodie-item">
+          <div class="photo-placeholder" style="min-height:80px; border-radius:8px;">
+            <span class="ph-label" style="font-size:0.6rem;">Li-Ning</span>
+          </div>
+          <div class="goodie-name">Li-Ning</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earned Media Value -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.4rem; margin-bottom:1rem;">Earned Media Value</h3>
+      <div class="stat-grid" style="grid-template-columns:repeat(3, 1fr);">
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2.2rem;">SGD 220K+</div>
+          <div class="stat-label">Total Earned Media</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2.2rem;">SGD 219K</div>
+          <div class="stat-label">PR Value</div>
+          <div class="stat-source">22 media features</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2.2rem;">&gt;$900K</div>
+          <div class="stat-label">PS PR Value</div>
+          <div class="stat-source">Plaza Singapura (as of 12 Apr)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 08 — GROWTH STORY
+     ============================================================ -->
+<section class="section-dark page-break" id="growth-story">
+  <div class="container">
+    <div class="section-label reveal">Section 08</div>
+    <h2 class="section-title reveal" style="color:var(--white)">The Rallies Growth Story</h2>
+    <p class="section-subtitle reveal">Edition 01 set the baseline. Here's where Rallies is headed — bigger scale, regional expansion, and deeper brand partnerships.</p>
+    <div class="divider reveal"></div>
+
+    <!-- Edition 1 Baseline -->
+    <div class="reveal" style="margin-top:3rem;">
+      <h3 style="font-size:1.6rem; color:var(--white); margin-bottom:1.5rem;">Edition 01 — The Baseline</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2rem;">278</div>
+          <div class="stat-label">Players</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2rem;">36</div>
+          <div class="stat-label">Teams</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2rem;">5.2M+</div>
+          <div class="stat-label">Reach</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2rem;">+26</div>
+          <div class="stat-label">NPS</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size:2rem;">74%</div>
+          <div class="stat-label">Return Intent</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edition 2 Projections -->
+    <div class="reveal" style="margin-top:4rem;">
+      <h3 style="font-size:1.6rem; color:var(--white); margin-bottom:1.5rem;">Edition 02 — Projections</h3>
+      <div class="two-col">
+        <div>
+          <div style="background:rgba(202,255,0,0.08); border:1px solid rgba(202,255,0,0.2); border-radius:16px; padding:2rem; margin-bottom:1.5rem;">
+            <h4 style="font-size:1.2rem; color:var(--green); margin-bottom:1rem;">Scale Up</h4>
+            <ul style="color:var(--gray-300); font-size:0.9rem; list-style:none;">
+              <li style="margin-bottom:0.5rem;">&#9654; 500+ players target (80% growth)</li>
+              <li style="margin-bottom:0.5rem;">&#9654; 60+ teams across more categories</li>
+              <li style="margin-bottom:0.5rem;">&#9654; 10M+ projected campaign reach</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Multi-week activation window</li>
+            </ul>
+          </div>
+          <div style="background:rgba(242,101,34,0.08); border:1px solid rgba(242,101,34,0.2); border-radius:16px; padding:2rem;">
+            <h4 style="font-size:1.2rem; color:var(--orange); margin-bottom:1rem;">Planned Upgrades</h4>
+            <ul style="color:var(--gray-300); font-size:0.9rem; list-style:none;">
+              <li style="margin-bottom:0.5rem;">&#9654; Enhanced match format (based on 3.37 rating feedback)</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Improved event organisation workflows</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Expanded spectator experience zones</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Deeper digital content strategy</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Live streaming integration</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:2rem;">
+            <h4 style="font-size:1.2rem; color:var(--white); margin-bottom:1rem;">Regional Expansion</h4>
+            <p style="color:var(--gray-300); font-size:0.9rem; margin-bottom:1rem;">Rallies is built as a platform, not just an event. The format is designed to scale across Southeast Asian markets where pickleball adoption is surging.</p>
+            <ul style="color:var(--gray-300); font-size:0.9rem; list-style:none;">
+              <li style="margin-bottom:0.5rem;">&#9654; Singapore — Home base, annual flagship</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Malaysia — KL market launch (exploration)</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Thailand — Bangkok market potential</li>
+              <li style="margin-bottom:0.5rem;">&#9654; Philippines — Strong pickleball community</li>
+            </ul>
+          </div>
+          <div style="background:rgba(202,255,0,0.08); border:1px solid rgba(202,255,0,0.2); border-radius:16px; padding:2rem; margin-top:1.5rem;">
+            <h4 style="font-size:1.2rem; color:var(--green); margin-bottom:1rem;">Sponsorship Tiers Preview</h4>
+            <ul style="color:var(--gray-300); font-size:0.9rem; list-style:none;">
+              <li style="margin-bottom:0.5rem;">&#9654; <strong style="color:var(--green);">Title Sponsor</strong> — Naming rights, full integration</li>
+              <li style="margin-bottom:0.5rem;">&#9654; <strong style="color:var(--orange);">Major Partner</strong> — On-court branding, activation zone</li>
+              <li style="margin-bottom:0.5rem;">&#9654; <strong style="color:var(--white);">Official Supplier</strong> — Goodie bag, sampling rights</li>
+              <li style="margin-bottom:0.5rem;">&#9654; <strong style="color:var(--gray-300);">Community Partner</strong> — Digital presence, co-branded content</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-placeholder reveal" style="margin-top:3rem; min-height:250px;">
+      <span class="ph-label">Vision Shot — Future Edition Concept / Expanded Venue</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 09 — APPENDIX
+     ============================================================ -->
+<section class="section-light page-break" id="appendix">
+  <div class="container">
+    <div class="section-label reveal">Section 09</div>
+    <h2 class="section-title reveal">Appendix</h2>
+    <p class="section-subtitle reveal">Photo gallery, survey summary, and complete corporate team listing.</p>
+    <div class="divider reveal"></div>
+
+    <!-- Photo Gallery Placeholders -->
+    <h3 style="font-size:1.4rem; margin-top:3rem; margin-bottom:1rem;" class="reveal">Photo Gallery</h3>
+    <div class="photo-grid reveal">
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Grand Finals — Kampong Kaki Category</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Grand Finals — Corporate Category</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Celebrity KOL Exhibition Match</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Mayor Denise Phua — Opening Ceremony</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Sponsor Activation Booths</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Crowd / Spectator Energy</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Goodie Bag & Prize Distribution</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Media Day — 6 April Launch</span>
+      </div>
+      <div class="photo-placeholder" style="min-height:220px;">
+        <span class="ph-label">Pickleball Clinics — Public Engagement</span>
+      </div>
+    </div>
+
+    <!-- Survey Summary Table -->
+    <h3 style="font-size:1.4rem; margin-top:3rem; margin-bottom:1rem;" class="reveal">Survey Summary</h3>
+    <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;" class="reveal">Post-event survey, n=27 respondents</p>
+    <table class="data-table reveal">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>NPS Score</td>
+          <td style="font-weight:700;">+26</td>
+          <td>Promoters 14 (52%) | Passives 6 (22%) | Detractors 7 (26%)</td>
+        </tr>
+        <tr>
+          <td>Goodie Bag Rating</td>
+          <td style="font-weight:700;">4.30 / 5</td>
+          <td>Highest-rated aspect</td>
+        </tr>
+        <tr>
+          <td>Atmosphere Rating</td>
+          <td style="font-weight:700;">4.15 / 5</td>
+          <td>In-mall format highly valued</td>
+        </tr>
+        <tr>
+          <td>Staff Rating</td>
+          <td style="font-weight:700;">3.81 / 5</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Organisation Rating</td>
+          <td style="font-weight:700;">3.37 / 5</td>
+          <td>Area for improvement in Ed. 02</td>
+        </tr>
+        <tr>
+          <td>Match Format Rating</td>
+          <td style="font-weight:700;">3.37 / 5</td>
+          <td>Area for improvement in Ed. 02</td>
+        </tr>
+        <tr>
+          <td>Return Intent</td>
+          <td style="font-weight:700;">74%</td>
+          <td>Definitely 10 | Probably 10 | Not Sure 6 | Probably Not 1</td>
+        </tr>
+        <tr>
+          <td>Community Discovery</td>
+          <td style="font-weight:700;">93%</td>
+          <td>25 of 27 found new players/communities</td>
+        </tr>
+        <tr>
+          <td>Top Discovery Channel</td>
+          <td style="font-weight:700;">41%</td>
+          <td>Friend / word of mouth</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Corporate Team List -->
+    <h3 style="font-size:1.4rem; margin-top:3rem; margin-bottom:1rem;" class="reveal">Corporate Teams — Full List</h3>
+    <p style="font-size:0.85rem; color:var(--gray-600); margin-bottom:1rem;" class="reveal">20 corporate teams, 151 players</p>
+    <div class="reveal">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Team Name</th>
+            <th>Organisation / Sector</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>ACUVUE Dinkers</td><td>ACUVUE (Title Sponsor)</td></tr>
+          <tr><td>Team EY</td><td>Ernst & Young — Professional Services</td></tr>
+          <tr><td>HTX Vanguard</td><td>Home Team Science & Technology Agency — Government</td></tr>
+          <tr><td>SPaddle Power</td><td>SP Group — Energy / Utilities</td></tr>
+          <tr><td>SportSG</td><td>Sport Singapore — Government</td></tr>
+          <tr><td>Rider Levett Bucknall</td><td>Quantity Surveying / Construction</td></tr>
+          <tr><td>Ignite TOVA</td><td>Corporate</td></tr>
+          <tr><td>PickleBoners</td><td>Corporate</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.8rem; color:var(--gray-600); margin-top:0.5rem;">Showing named teams. Additional corporate teams from MOM, MOE, NTU, and other organisations participated. Full list available on request.</p>
+    </div>
+
+    <!-- Report Footer -->
+    <div style="margin-top:4rem; padding-top:2rem; border-top:1px solid var(--gray-200); text-align:center;" class="reveal">
+      <p style="font-size:0.8rem; color:var(--gray-600);">ACUVUE RALLIES 2026 Post-Event Report &bull; Edition 01 &bull; Confidential</p>
+      <p style="font-size:0.75rem; color:var(--gray-300); margin-top:0.5rem;">Prepared by Rallies (Elitez Group) &bull; rallies.elitez.asia &bull; @rallies.asia</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// ================================================================
+// REPORT DATA — Single source of truth for all numbers
+// ================================================================
+const REPORT_DATA = {
+  // Registration (Source: players CSV, 278 registrations)
+  registration: {
+    totalPlayers: 278,
+    totalTeams: 36,
+    kampongKakiTeams: 16,
+    corporateTeams: 20,
+    kkPlayers: 127,
+    corpPlayers: 151,
+    male: 169,
+    female: 109,
+    malePct: 60.8,
+    femalePct: 39.2,
+    ageBands: {
+      'Under 25': { count: 8, pct: 2.9 },
+      '25-34': { count: 78, pct: 28.1 },
+      '35-44': { count: 89, pct: 32.0 },
+      '45-54': { count: 69, pct: 24.8 },
+      '55+': { count: 34, pct: 12.2 }
+    },
+    workingAgePct: 84.9,
+    workingAgeCount: 236
+  },
+  // Survey (Source: Post Event Survey CSV, n=27)
+  survey: {
+    n: 27,
+    nps: 26,
+    promoters: { count: 14, pct: 52 },
+    passives: { count: 6, pct: 22 },
+    detractors: { count: 7, pct: 26 },
+    aspects: {
+      'Atmosphere': 4.15,
+      'Organisation': 3.37,
+      'Match Format': 3.37,
+      'Goodie Bag': 4.30,
+      'Staff': 3.81
+    },
+    returnIntent: 74, // %
+    returnBreakdown: { definitelyYes: 10, probablyYes: 10, notSure: 6, probablyNot: 1 },
+    communityDiscovery: 93, // %
+    communityDiscoveryRaw: { yes: 25, total: 27 },
+    discoveryChannels: {
+      'Friend / Word of Mouth': 41,
+      'Instagram': 22,
+      'PB Chat Group': 19,
+      'Company / Colleague': 15,
+      'Other': 4
+    },
+    // Sponsor recall (unaided)
+    sponsorRecall: {
+      'GYG': 12,
+      'H-TWO-O': 10,
+      'ACUVUE': 9,
+      'Determinant': 3,
+      'Spectacle Hut': 3,
+      'Li-Ning': 2,
+      'Fullout': 1,
+      'Lenskate': 1
+    }
+  },
+  // Reach & Media (Source: ACUVUE RALLIES POST-EVENT REPORT PDF)
+  reach: {
+    totalCampaignReach: 5200000,
+    earnedMediaValue: 220000, // SGD
+    onGroundEngagements: 7000,
+    digitalReach: 112000,
+    prFeatures: 22,
+    prCirculation: 16700000,
+    prAdjustedReach: 5100000,
+    prValue: 219000,
+    digitalTotalReach: 112500,
+    contentViews: 177000,
+    kols: 20,
+    kolFollowing: 277000,
+    ugcReach: 66000,
+    onGroundRange: '5,500-7,000',
+    peakSpectators: 350,
+    activationDays: 7
+  },
+  // Plaza Singapura
+  plazaSingapura: {
+    mallCommsReach: 1500000,
+    prValue: 900000,
+    estReach: 6740298
+  },
+  // Instagram (Source: @rallies.asia IG Professional Dashboard)
+  instagram: {
+    totalViews90d: 344245,
+    adsPct: 4.5,
+    organicPct: 95.5,
+    nonFollowersPct: 70.8,
+    followersPct: 29.2,
+    accountsReached: 45356,
+    contentType: { stories: 48.9, posts: 33.5, reels: 17.5 },
+    topPosts: [
+      { date: '6 Apr', views: 12000 },
+      { date: '8 Apr', views: 9900 },
+      { date: '8 Apr', views: 9300 },
+      { date: '7 Apr', views: 8100 }
+    ],
+    proDashboard: { views: 270200, interactions: 3900, newFollowers: 639, contentShared: 332 }
+  },
+  // Google Analytics (Source: rallies.elitez.asia GA, Jan 21 - Apr 20, 2026)
+  ga: {
+    activeUsers: 15000,
+    newUsers: 14000,
+    avgEngagement: '19s',
+    sessions: { direct: 8000, referral: 7200, organicSearch: 2000, organicSocial: 1400, paidSocial: 836 },
+    topCountry: { name: 'Singapore', users: 9900, pct: 66 },
+    pageViews: 23000,
+    firstVisits: 14000,
+    fileDownloads: 319,
+    formStarts: 197
+  },
+  // Social Listening (Source: Social listening xlsx)
+  socialListening: {
+    totalItems: 1069,
+    uniqueOutlets: 85,
+    platforms: { instagram: 68, facebook: 54, linkedin: 7, x: 1 }
+  }
+};
+
+// ================================================================
+// COUNTER ANIMATION — IntersectionObserver + requestAnimationFrame
+// ================================================================
+function animateCounter(el) {
+  const target = parseInt(el.getAttribute('data-target'));
+  const suffix = el.getAttribute('data-suffix') || '';
+  const format = el.getAttribute('data-format') || '';
+  const duration = 1500;
+  const startTime = performance.now();
+
+  function formatNumber(n) {
+    if (format === 'abbr') {
+      if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+      if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+    }
+    return n.toLocaleString();
+  }
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = Math.floor(eased * target);
+    el.textContent = formatNumber(current) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.counted) {
+      entry.target.dataset.counted = 'true';
+      animateCounter(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.count-up[data-target]').forEach(el => counterObserver.observe(el));
+
+// ================================================================
+// REVEAL ANIMATION — IntersectionObserver
+// ================================================================
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ================================================================
+// CHART.JS — Initializations
+// ================================================================
+const chartColors = {
+  green: '#CAFF00',
+  orange: '#F26522',
+  black: '#0D0D0D',
+  gray: '#C0C0C0',
+  white: '#FFFFFF',
+  greenDim: 'rgba(202,255,0,0.6)',
+  orangeDim: 'rgba(242,101,34,0.6)'
+};
+
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.color = '#666';
+
+// --- Age Band Doughnut ---
+new Chart(document.getElementById('chartAgeBand'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Under 25 (2.9%)', '25-34 (28.1%)', '35-44 (32.0%)', '45-54 (24.8%)', '55+ (12.2%)'],
+    datasets: [{
+      data: [8, 78, 89, 69, 34],
+      backgroundColor: ['#999999', '#CAFF00', '#9ECC00', '#F26522', '#C0C0C0'],
+      borderColor: '#FFFFFF',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '55%',
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            return ctx.label + ': ' + ctx.raw + ' players';
+          }
+        }
+      }
+    }
+  }
+});
+
+// --- Discovery Channels Pie ---
+new Chart(document.getElementById('chartDiscovery'), {
+  type: 'pie',
+  data: {
+    labels: ['Friend / Word of Mouth (41%)', 'Instagram (22%)', 'PB Chat Group (19%)', 'Company / Colleague (15%)', 'Other (4%)'],
+    datasets: [{
+      data: [41, 22, 19, 15, 4],
+      backgroundColor: ['#CAFF00', '#F26522', '#9ECC00', '#0099CC', '#C0C0C0'],
+      borderColor: '#FFFFFF',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } }
+    }
+  }
+});
+
+// --- Sponsor Recall Horizontal Bar ---
+new Chart(document.getElementById('chartSponsorRecall'), {
+  type: 'bar',
+  data: {
+    labels: ['GYG', 'H-TWO-O', 'ACUVUE', 'Determinant', 'Spectacle Hut', 'Li-Ning', 'Fullout', 'Lenskate'],
+    datasets: [{
+      label: 'Unaided Mentions',
+      data: [12, 10, 9, 3, 3, 2, 1, 1],
+      backgroundColor: ['#F26522', '#0099CC', '#CAFF00', '#999999', '#999999', '#999999', '#C0C0C0', '#C0C0C0'],
+      borderRadius: 6
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        ticks: { stepSize: 2 }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { weight: 'bold', size: 12 } }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            return ctx.raw + ' unaided mentions (n=27)';
+          }
+        }
+      }
+    }
+  }
+});
+
+// --- Reach Breakdown Bar ---
+new Chart(document.getElementById('chartReachBreakdown'), {
+  type: 'bar',
+  data: {
+    labels: ['PR Adjusted Reach', 'Digital Reach', 'On-Ground Engagements', 'UGC Reach'],
+    datasets: [{
+      label: 'Reach',
+      data: [5100000, 112500, 7000, 66000],
+      backgroundColor: ['#CAFF00', '#F26522', '#9ECC00', '#0099CC'],
+      borderRadius: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(255,255,255,0.08)' },
+        ticks: {
+          color: '#999',
+          callback: function(v) {
+            if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M';
+            if (v >= 1000) return (v / 1000) + 'K';
+            return v;
+          }
+        }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#999', font: { size: 11 } }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            return ctx.raw.toLocaleString();
+          }
+        }
+      }
+    }
+  }
+});
+
+// ================================================================
+// EXPORT PDF — html2pdf.js
+// ================================================================
+function exportPDF() {
+  // Convert charts to images for print fidelity
+  document.querySelectorAll('canvas').forEach(canvas => {
+    const img = document.createElement('img');
+    img.src = canvas.toDataURL('image/png');
+    img.style.width = '100%';
+    img.style.maxWidth = canvas.style.maxWidth || '600px';
+    img.className = 'chart-print-img';
+    canvas.parentNode.insertBefore(img, canvas.nextSibling);
+    canvas.style.display = 'none';
+  });
+
+  const element = document.body;
+  const opt = {
+    margin: 0,
+    filename: 'ACUVUE-RALLIES-2026-Post-Event-Report.pdf',
+    image: { type: 'jpeg', quality: 0.95 },
+    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'], before: '.page-break' }
+  };
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    // Restore canvases after export
+    document.querySelectorAll('.chart-print-img').forEach(img => {
+      const canvas = img.previousElementSibling;
+      if (canvas && canvas.tagName === 'CANVAS') {
+        canvas.style.display = '';
+      }
+      img.remove();
+    });
+  });
+}
+</script>
+
+</body>
+</html>

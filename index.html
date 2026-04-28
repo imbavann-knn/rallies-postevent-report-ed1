@@ -456,15 +456,146 @@ section { padding: 5rem 0; }
 /* ============================================================
    PRINT / PDF STYLES
    ============================================================ */
+/* ============================================================
+   PRINT / PDF MODE
+   ============================================================ */
 @media print {
-  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
   .export-btn { display: none !important; }
-  .page-break { break-before: page; }
-  section { padding: 2rem 0; }
-  .cover { min-height: auto; padding: 3rem 0; }
-  .reveal { opacity: 1 !important; transform: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .stat-card:hover { transform: none; }
+  * { transition: none !important; animation: none !important; }
 }
+
+/* PDF export mode — applied via JS class */
+body.pdf-mode {
+  width: 794px !important; /* A4 at 96dpi */
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+body.pdf-mode .export-btn { display: none !important; }
+body.pdf-mode .reveal { opacity: 1 !important; transform: none !important; }
+body.pdf-mode * { transition: none !important; animation: none !important; }
+
+/* Page break control */
+body.pdf-mode .pdf-page-break {
+  break-before: page;
+  page-break-before: always;
+}
+
+body.pdf-mode section {
+  padding: 2.5rem 0 !important;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+body.pdf-mode .container { padding: 0 1.5rem !important; }
+
+/* Cover page */
+body.pdf-mode .cover {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 3rem 2rem !important;
+}
+
+body.pdf-mode .cover h1 { font-size: 3rem !important; }
+body.pdf-mode .cover-stats { gap: 1rem !important; }
+
+/* Section titles */
+body.pdf-mode .section-title { font-size: 2rem !important; }
+
+/* Stat cards - compact for PDF */
+body.pdf-mode .stat-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0.75rem !important;
+  margin-top: 1.5rem !important;
+}
+
+body.pdf-mode .stat-card {
+  padding: 1rem 0.75rem !important;
+  border-radius: 8px !important;
+}
+
+body.pdf-mode .stat-card .stat-number { font-size: 2rem !important; }
+
+/* Two/three column grids */
+body.pdf-mode .two-col,
+body.pdf-mode .three-col {
+  gap: 1rem !important;
+}
+
+/* Charts - use static images in PDF */
+body.pdf-mode canvas { display: none !important; }
+body.pdf-mode .chart-print-img { display: block !important; max-width: 100% !important; }
+body.pdf-mode .chart-container { max-width: 500px !important; margin: 1rem auto !important; }
+
+/* Photo placeholders - compact */
+body.pdf-mode .photo-placeholder { min-height: 180px !important; }
+
+/* Quote cards */
+body.pdf-mode .quote-card {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  padding: 1rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* VIP banner */
+body.pdf-mode .vip-banner {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Sponsor ecosystem */
+body.pdf-mode .sponsor-cluster {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Tables */
+body.pdf-mode .data-table { font-size: 0.75rem !important; }
+body.pdf-mode .data-table th,
+body.pdf-mode .data-table td { padding: 0.4rem 0.6rem !important; }
+
+/* Timeline compact */
+body.pdf-mode .timeline { margin: 1rem 0 !important; }
+
+/* TOC compact */
+body.pdf-mode .toc { gap: 0.75rem !important; }
+body.pdf-mode .toc-item { padding: 0.75rem !important; }
+
+/* NPS gauge */
+body.pdf-mode .nps-gauge { break-inside: avoid; page-break-inside: avoid; }
+body.pdf-mode .nps-score { font-size: 3rem !important; }
+
+/* Aspect bars */
+body.pdf-mode .aspect-row { break-inside: avoid; }
+
+/* Photo grid */
+body.pdf-mode .photo-grid { gap: 0.75rem !important; }
+
+/* Keep key blocks together */
+body.pdf-mode .stat-grid,
+body.pdf-mode .chart-row,
+body.pdf-mode .sponsor-cluster,
+body.pdf-mode .nps-gauge,
+body.pdf-mode .vip-banner,
+body.pdf-mode .quote-card,
+body.pdf-mode .data-table {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+/* Section spacing for PDF */
+body.pdf-mode section + section { margin-top: 0 !important; }
+
+/* Dividers */
+body.pdf-mode .divider { margin: 1rem 0 !important; }
+
+/* Hide chart canvases, show print images */
+.chart-print-img { display: none; }
 
 /* ============================================================
    RESPONSIVE
@@ -541,7 +672,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      TABLE OF CONTENTS
      ============================================================ -->
-<section class="section-dark page-break" id="toc">
+<section class="section-dark page-break pdf-page-break" id="toc">
   <div class="container">
     <div class="section-label">Contents Overview</div>
     <h2 class="section-title" style="color:var(--white)">What This Report Covers</h2>
@@ -597,7 +728,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 01 — EXECUTIVE SUMMARY
      ============================================================ -->
-<section class="section-light page-break" id="exec-summary">
+<section class="section-light page-break pdf-page-break" id="exec-summary">
   <div class="container">
     <div class="section-label reveal">Section 01</div>
     <h2 class="section-title reveal">Executive Summary</h2>
@@ -651,7 +782,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 02 — EVENT OVERVIEW
      ============================================================ -->
-<section class="section-dark page-break" id="event-overview">
+<section class="section-dark page-break pdf-page-break" id="event-overview">
   <div class="container">
     <div class="section-label reveal">Section 02</div>
     <h2 class="section-title reveal" style="color:var(--white)">Event Overview &amp; Brand Story</h2>
@@ -742,7 +873,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 03 — PLAYER POOL
      ============================================================ -->
-<section class="section-light page-break" id="player-pool">
+<section class="section-light page-break pdf-page-break" id="player-pool">
   <div class="container">
     <div class="section-label reveal">Section 03</div>
     <h2 class="section-title reveal">Player Pool Breakdown</h2>
@@ -860,7 +991,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 04 — EYEBALLS & REACH
      ============================================================ -->
-<section class="section-dark page-break" id="eyeballs">
+<section class="section-dark page-break pdf-page-break" id="eyeballs">
   <div class="container">
     <div class="section-label reveal">Section 04</div>
     <h2 class="section-title reveal" style="color:var(--white)">Eyeballs &amp; Reach</h2>
@@ -904,6 +1035,35 @@ section { padding: 5rem 0; }
       </div>
     </div>
 
+    <!-- Plaza Singapura Footfall Impact -->
+    <div class="reveal" style="margin-top:3rem; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:2.5rem;">
+      <div style="text-align:center; margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--orange); margin-bottom:0.75rem;">Venue Impact</div>
+        <h3 style="font-size:1.8rem; color:var(--white); margin-bottom:0.5rem;">Plaza Singapura Footfall Impact</h3>
+        <p style="font-size:0.9rem; color:var(--gray-300);">Plaza Singapura averages ~<strong style="color:var(--green);">3M footfall per month</strong>. During the ACUVUE RALLIES event period, the venue recorded measurable uplift across all key indicators.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;">
+        <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(202,255,0,0.2); border-radius:12px; padding:1.5rem; text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--gray-300); margin-bottom:1rem;">Week-on-Week</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:3.5rem; font-weight:800; color:var(--green); line-height:1; text-shadow:0 0 30px rgba(202,255,0,0.3);">+2%</div>
+          <div style="font-size:0.8rem; color:var(--gray-300); margin-top:0.75rem;">WOW Uplift</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(202,255,0,0.2); border-radius:12px; padding:1.5rem; text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--gray-300); margin-bottom:1rem;">Year-on-Year</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:3.5rem; font-weight:800; color:var(--green); line-height:1; text-shadow:0 0 30px rgba(202,255,0,0.3);">+2%</div>
+          <div style="font-size:0.8rem; color:var(--gray-300); margin-top:0.75rem;">YOY Uplift</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(202,255,0,0.4); border-radius:12px; padding:1.5rem; text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--gray-300); margin-bottom:1rem;">Opening Weekend</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:3.5rem; font-weight:800; color:var(--green); line-height:1; text-shadow:0 0 30px rgba(202,255,0,0.3);">+6%</div>
+          <div style="font-size:0.8rem; color:var(--gray-300); margin-top:0.75rem;">vs Average Weekend</div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:1.5rem;">
+        <div style="font-size:0.75rem; color:var(--gray-600); font-style:italic;">Source: Plaza Singapura mall management footfall data</div>
+      </div>
+    </div>
+
     <div class="photo-placeholder reveal" style="margin-top:2.5rem; min-height:250px;">
       <span class="ph-label">Media Day — 6 April, Press & KOL Coverage</span>
     </div>
@@ -913,7 +1073,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 05 — COMMUNITY BUZZ
      ============================================================ -->
-<section class="section-light page-break" id="community-buzz">
+<section class="section-light page-break pdf-page-break" id="community-buzz">
   <div class="container">
     <div class="section-label reveal">Section 05</div>
     <h2 class="section-title reveal">Community Buzz</h2>
@@ -1047,7 +1207,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 06 — ONLINE BUZZ
      ============================================================ -->
-<section class="section-dark page-break" id="online-buzz">
+<section class="section-dark page-break pdf-page-break" id="online-buzz">
   <div class="container">
     <div class="section-label reveal">Section 06</div>
     <h2 class="section-title reveal" style="color:var(--white)">Online Buzz</h2>
@@ -1302,7 +1462,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 07 — SPONSOR VISIBILITY
      ============================================================ -->
-<section class="section-light page-break" id="sponsor-visibility">
+<section class="section-light page-break pdf-page-break" id="sponsor-visibility">
   <div class="container">
     <div class="section-label reveal">Section 07</div>
     <h2 class="section-title reveal">Sponsor Visibility Report</h2>
@@ -1369,6 +1529,26 @@ section { padding: 5rem 0; }
         <div style="display:flex; justify-content:center; align-items:center; gap:2rem;">
           <img src="assets/sponsor-elitez-events.png" alt="Elitez Events" style="height:35px; object-fit:contain;">
           <img src="assets/tsa-logo.jpg" alt="The Sports Arina" style="height:35px; object-fit:contain;">
+        </div>
+      </div>
+    </div>
+
+    <!-- ACUVUE Title Sponsor Testimonial -->
+    <div class="reveal quote-card" style="background:var(--black); border-left:4px solid var(--green); border-radius:12px; padding:2.5rem; margin-bottom:3rem; position:relative;">
+      <div style="display:flex; align-items:flex-start; gap:2rem;">
+        <div style="flex-shrink:0;">
+          <img src="assets/acuvue-logo.png" alt="ACUVUE" style="height:40px; object-fit:contain; opacity:0.9;">
+        </div>
+        <div>
+          <div style="font-size:2.5rem; font-family:'Barlow Condensed',sans-serif; color:var(--green); line-height:1; margin-bottom:0.5rem;">&ldquo;</div>
+          <p style="font-size:1.05rem; color:var(--white); font-style:italic; line-height:1.7; margin-bottom:1.5rem;">ACUVUE RALLIES was thoughtfully executed and stood out as a first&#8209;of&#8209;its&#8209;kind pickleball activation in Singapore. The event successfully captured attention, drawing curiosity from shoppers, strong engagement from players, and sustained on&#8209;ground energy throughout. The smooth execution and vibrant atmosphere played a key role in creating a highly engaging and memorable experience, bringing a palpable sense of excitement to the sport. We are proud to be part of this successful activation.</p>
+          <div style="display:flex; align-items:center; gap:1rem;">
+            <div style="width:40px; height:2px; background:var(--green);"></div>
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.95rem; font-weight:600; color:var(--white);">ACUVUE</div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--green); margin-top:0.15rem;">Title Sponsor</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1471,7 +1651,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 08 — GROWTH STORY
      ============================================================ -->
-<section class="section-dark page-break" id="growth-story">
+<section class="section-dark page-break pdf-page-break" id="growth-story">
   <div class="container">
     <div class="section-label reveal">Section 08</div>
     <h2 class="section-title reveal" style="color:var(--white)">The Rallies Growth Story</h2>
@@ -1563,7 +1743,7 @@ section { padding: 5rem 0; }
 <!-- ============================================================
      SECTION 09 — APPENDIX
      ============================================================ -->
-<section class="section-light page-break" id="appendix">
+<section class="section-light page-break pdf-page-break" id="appendix">
   <div class="container">
     <div class="section-label reveal">Section 09</div>
     <h2 class="section-title reveal">Appendix</h2>
@@ -1785,7 +1965,11 @@ const REPORT_DATA = {
   plazaSingapura: {
     mallCommsReach: 1500000,
     prValue: 900000,
-    estReach: 6740298
+    estReach: 6740298,
+    avgMonthlyFootfall: 3000000,
+    wowUplift: 2,
+    yoyUplift: 2,
+    openingWeekendUplift: 6
   },
   // Instagram (Source: @rallies.asia IG Professional Dashboard)
   instagram: {
@@ -2030,37 +2214,63 @@ new Chart(document.getElementById('chartReachBreakdown'), {
 // EXPORT PDF — html2pdf.js
 // ================================================================
 function exportPDF() {
-  // Convert charts to images for print fidelity
-  document.querySelectorAll('canvas').forEach(canvas => {
-    const img = document.createElement('img');
-    img.src = canvas.toDataURL('image/png');
-    img.style.width = '100%';
-    img.style.maxWidth = canvas.style.maxWidth || '600px';
-    img.className = 'chart-print-img';
-    canvas.parentNode.insertBefore(img, canvas.nextSibling);
-    canvas.style.display = 'none';
+  const btn = document.querySelector('.export-btn');
+  if (btn) btn.textContent = 'Generating PDF…';
+
+  // Add PDF mode class for styling
+  document.body.classList.add('pdf-mode');
+
+  // Convert all Chart.js canvases to static images
+  const canvases = document.querySelectorAll('canvas');
+  canvases.forEach(canvas => {
+    try {
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png', 1.0);
+      img.className = 'chart-print-img';
+      img.style.width = '100%';
+      img.style.maxWidth = '500px';
+      img.style.display = 'block';
+      img.style.margin = '0 auto';
+      canvas.parentNode.insertBefore(img, canvas.nextSibling);
+    } catch(e) { console.warn('Chart export failed:', e); }
   });
 
-  const element = document.body;
-  const opt = {
-    margin: 0,
-    filename: 'ACUVUE-RALLIES-2026-Post-Event-Report.pdf',
-    image: { type: 'jpeg', quality: 0.95 },
-    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'], before: '.page-break' }
-  };
-
-  html2pdf().set(opt).from(element).save().then(() => {
-    // Restore canvases after export
-    document.querySelectorAll('.chart-print-img').forEach(img => {
-      const canvas = img.previousElementSibling;
-      if (canvas && canvas.tagName === 'CANVAS') {
-        canvas.style.display = '';
+  // Brief delay to let styles apply
+  setTimeout(() => {
+    const opt = {
+      margin: [10, 12, 14, 12], // top, left, bottom, right in mm
+      filename: 'ACUVUE-RALLIES-2026-Post-Event-Report.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0,
+        windowWidth: 794,
+        logging: false,
+        removeContainer: true
+      },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: {
+        mode: ['css', 'legacy'],
+        before: '.pdf-page-break',
+        avoid: ['.stat-card', '.stat-grid', '.quote-card', '.vip-banner', '.sponsor-cluster', '.nps-gauge', '.chart-container', '.data-table', 'h2', 'h3']
       }
-      img.remove();
+    };
+
+    html2pdf().set(opt).from(document.body).save().then(() => {
+      // Cleanup: restore everything
+      document.body.classList.remove('pdf-mode');
+      document.querySelectorAll('.chart-print-img').forEach(img => img.remove());
+      canvases.forEach(c => c.style.display = '');
+      if (btn) btn.textContent = 'Export PDF';
+    }).catch(err => {
+      console.error('PDF generation failed:', err);
+      document.body.classList.remove('pdf-mode');
+      document.querySelectorAll('.chart-print-img').forEach(img => img.remove());
+      canvases.forEach(c => c.style.display = '');
+      if (btn) btn.textContent = 'Export PDF';
     });
-  });
+  }, 300);
 }
 </script>
 

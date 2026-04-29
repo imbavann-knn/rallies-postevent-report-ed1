@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<!-- html2pdf.js removed — using window.print() for proper A4 PDF output -->
 <style>
 /* ============================================================
    ACUVUE RALLIES 2026 — POST-EVENT REPORT
@@ -457,145 +457,106 @@ section { padding: 5rem 0; }
    PRINT / PDF STYLES
    ============================================================ */
 /* ============================================================
-   PRINT / PDF MODE
+   PRINT / PDF MODE — uses browser native print (window.print)
    ============================================================ */
-@media print {
-  body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
-  .export-btn { display: none !important; }
-  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .stat-card:hover { transform: none; }
-  * { transition: none !important; animation: none !important; }
-}
-
-/* PDF export mode — applied via JS class */
-body.pdf-mode {
-  width: 794px !important; /* A4 at 96dpi */
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible !important;
-}
-
-body.pdf-mode .export-btn { display: none !important; }
-body.pdf-mode .reveal { opacity: 1 !important; transform: none !important; }
-body.pdf-mode * { transition: none !important; animation: none !important; }
-
-/* Page break control */
-body.pdf-mode .pdf-page-break {
-  break-before: page;
-  page-break-before: always;
-}
-
-body.pdf-mode section {
-  padding: 2.5rem 0 !important;
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-body.pdf-mode .container { padding: 0 1.5rem !important; }
-
-/* Cover page */
-body.pdf-mode .cover {
-  min-height: 0 !important;
-  height: auto !important;
-  padding: 3rem 2rem !important;
-}
-
-body.pdf-mode .cover h1 { font-size: 3rem !important; }
-body.pdf-mode .cover-stats { gap: 1rem !important; }
-
-/* Section titles */
-body.pdf-mode .section-title { font-size: 2rem !important; }
-
-/* Stat cards - compact for PDF */
-body.pdf-mode .stat-grid {
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 0.75rem !important;
-  margin-top: 1.5rem !important;
-}
-
-body.pdf-mode .stat-card {
-  padding: 1rem 0.75rem !important;
-  border-radius: 8px !important;
-}
-
-body.pdf-mode .stat-card .stat-number { font-size: 2rem !important; }
-
-/* Two/three column grids */
-body.pdf-mode .two-col,
-body.pdf-mode .three-col {
-  gap: 1rem !important;
-}
-
-/* Charts - use static images in PDF */
-body.pdf-mode canvas { display: none !important; }
-body.pdf-mode .chart-print-img { display: block !important; max-width: 100% !important; }
-body.pdf-mode .chart-container { max-width: 500px !important; margin: 1rem auto !important; }
-
-/* Photo placeholders - compact */
-body.pdf-mode .photo-placeholder { min-height: 180px !important; }
-
-/* Quote cards */
-body.pdf-mode .quote-card {
-  break-inside: avoid;
-  page-break-inside: avoid;
-  padding: 1rem !important;
-  margin-bottom: 0.75rem !important;
-}
-
-/* VIP banner */
-body.pdf-mode .vip-banner {
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-/* Sponsor ecosystem */
-body.pdf-mode .sponsor-cluster {
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-/* Tables */
-body.pdf-mode .data-table { font-size: 0.75rem !important; }
-body.pdf-mode .data-table th,
-body.pdf-mode .data-table td { padding: 0.4rem 0.6rem !important; }
-
-/* Timeline compact */
-body.pdf-mode .timeline { margin: 1rem 0 !important; }
-
-/* TOC compact */
-body.pdf-mode .toc { gap: 0.75rem !important; }
-body.pdf-mode .toc-item { padding: 0.75rem !important; }
-
-/* NPS gauge */
-body.pdf-mode .nps-gauge { break-inside: avoid; page-break-inside: avoid; }
-body.pdf-mode .nps-score { font-size: 3rem !important; }
-
-/* Aspect bars */
-body.pdf-mode .aspect-row { break-inside: avoid; }
-
-/* Photo grid */
-body.pdf-mode .photo-grid { gap: 0.75rem !important; }
-
-/* Keep key blocks together */
-body.pdf-mode .stat-grid,
-body.pdf-mode .chart-row,
-body.pdf-mode .sponsor-cluster,
-body.pdf-mode .nps-gauge,
-body.pdf-mode .vip-banner,
-body.pdf-mode .quote-card,
-body.pdf-mode .data-table {
-  break-inside: avoid !important;
-  page-break-inside: avoid !important;
-}
-
-/* Section spacing for PDF */
-body.pdf-mode section + section { margin-top: 0 !important; }
-
-/* Dividers */
-body.pdf-mode .divider { margin: 1rem 0 !important; }
-
-/* Hide chart canvases, show print images */
 .chart-print-img { display: none; }
+
+@media print {
+  /* Force color printing */
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; transition: none !important; animation: none !important; }
+
+  /* Page setup */
+  @page { size: A4 portrait; margin: 12mm 14mm 14mm 14mm; }
+
+  body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-size: 14px !important; }
+
+  /* Hide interactive elements */
+  .export-btn { display: none !important; }
+
+  /* Kill animations — show everything */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .stat-card:hover { transform: none; }
+
+  /* Page breaks — each section starts a new page */
+  .pdf-page-break { break-before: page !important; page-break-before: always !important; }
+
+  /* Sections */
+  section { padding: 2rem 0 !important; }
+  .container { padding: 0 0.5rem !important; max-width: 100% !important; }
+
+  /* Cover page */
+  .cover { min-height: 0 !important; height: auto !important; padding: 2.5rem 1.5rem !important; }
+  .cover h1 { font-size: 2.8rem !important; }
+  .cover-stats { gap: 0.75rem !important; }
+  .cover-stat .cover-stat-num { font-size: 1.8rem !important; }
+
+  /* Section titles */
+  .section-title { font-size: 1.8rem !important; }
+  .section-label { font-size: 0.7rem !important; }
+
+  /* Stat grids — full width */
+  .stat-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 0.6rem !important; margin-top: 1.2rem !important; }
+  .stat-card { padding: 0.8rem 0.6rem !important; border-radius: 8px !important; break-inside: avoid !important; }
+  .stat-card .stat-number { font-size: 1.6rem !important; }
+  .stat-card .stat-label { font-size: 0.65rem !important; }
+  .stat-card .stat-source { font-size: 0.55rem !important; }
+
+  /* Multi-column layouts */
+  .two-col { grid-template-columns: 1fr 1fr !important; gap: 1rem !important; }
+  .three-col { grid-template-columns: 1fr 1fr 1fr !important; gap: 0.8rem !important; }
+
+  /* Charts — show static images, hide canvas */
+  canvas { display: none !important; }
+  .chart-print-img { display: block !important; width: 100% !important; max-width: 480px !important; margin: 0.5rem auto !important; }
+  .chart-container { max-width: 480px !important; margin: 0.8rem auto !important; }
+
+  /* Photo placeholders — smaller for print */
+  .photo-placeholder { min-height: 120px !important; }
+
+  /* TOC */
+  .toc { gap: 0.5rem !important; }
+  .toc-item { padding: 0.6rem !important; }
+  .toc-num { font-size: 1.2rem !important; }
+  .toc-title { font-size: 0.85rem !important; }
+  .toc-desc { font-size: 0.7rem !important; }
+
+  /* Keep blocks together — avoid splitting across pages */
+  .stat-grid, .chart-row, .sponsor-cluster, .nps-gauge, .vip-banner, .data-table { break-inside: avoid !important; page-break-inside: avoid !important; }
+  .quote-card { break-inside: avoid !important; page-break-inside: avoid !important; padding: 0.8rem !important; margin-bottom: 0.5rem !important; }
+
+  /* VIP banner */
+  .vip-banner { break-inside: avoid !important; padding: 1.5rem !important; }
+
+  /* NPS */
+  .nps-gauge { break-inside: avoid !important; }
+  .nps-score { font-size: 2.5rem !important; }
+
+  /* Aspect bars */
+  .aspect-row { break-inside: avoid; }
+
+  /* Timeline */
+  .timeline { margin: 0.8rem 0 !important; }
+  .timeline-item { padding: 0.8rem 0 0.8rem 2rem !important; }
+
+  /* Tables */
+  .data-table { font-size: 0.7rem !important; break-inside: avoid !important; }
+  .data-table th, .data-table td { padding: 0.3rem 0.5rem !important; }
+
+  /* Dividers */
+  .divider { margin: 0.8rem 0 !important; }
+
+  /* Photo grid */
+  .photo-grid { gap: 0.5rem !important; grid-template-columns: 1fr 1fr !important; }
+
+  /* Sponsor tier section */
+  .sponsor-cluster { gap: 0.8rem !important; }
+
+  /* Tags */
+  .tag { font-size: 0.65rem !important; padding: 0.2rem 0.5rem !important; }
+
+  /* Links — remove underlines for clean print */
+  a { text-decoration: none !important; }
+}
 
 /* ============================================================
    RESPONSIVE
@@ -2199,16 +2160,29 @@ new Chart(document.getElementById('chartReachBreakdown'), {
 });
 
 // ================================================================
-// EXPORT PDF — html2pdf.js
+// EXPORT PDF — browser native print (window.print)
 // ================================================================
 function exportPDF() {
   const btn = document.querySelector('.export-btn');
-  if (btn) btn.textContent = 'Generating PDF…';
+  if (btn) btn.textContent = 'Preparing…';
 
-  // Add PDF mode class for styling
-  document.body.classList.add('pdf-mode');
+  // 1. Force all count-up elements to their final values (so they don't show "0")
+  document.querySelectorAll('.count-up[data-target]').forEach(el => {
+    const target = parseInt(el.getAttribute('data-target'));
+    const suffix = el.getAttribute('data-suffix') || '';
+    const format = el.getAttribute('data-format') || '';
+    let display;
+    if (format === 'abbr') {
+      if (target >= 1000000) display = (target / 1000000).toFixed(1) + 'M';
+      else if (target >= 1000) display = (target / 1000).toFixed(0) + 'K';
+      else display = target.toLocaleString();
+    } else {
+      display = target.toLocaleString();
+    }
+    el.textContent = display + suffix;
+  });
 
-  // Convert all Chart.js canvases to static images
+  // 2. Convert Chart.js canvases to static images for print
   const canvases = document.querySelectorAll('canvas');
   canvases.forEach(canvas => {
     try {
@@ -2216,49 +2190,22 @@ function exportPDF() {
       img.src = canvas.toDataURL('image/png', 1.0);
       img.className = 'chart-print-img';
       img.style.width = '100%';
-      img.style.maxWidth = '500px';
-      img.style.display = 'block';
+      img.style.maxWidth = '480px';
       img.style.margin = '0 auto';
       canvas.parentNode.insertBefore(img, canvas.nextSibling);
     } catch(e) { console.warn('Chart export failed:', e); }
   });
 
-  // Brief delay to let styles apply
+  // 3. Brief delay for images to render, then trigger print
   setTimeout(() => {
-    const opt = {
-      margin: [10, 12, 14, 12], // top, left, bottom, right in mm
-      filename: 'ACUVUE-RALLIES-2026-Post-Event-Report.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        scrollY: 0,
-        windowWidth: 794,
-        logging: false,
-        removeContainer: true
-      },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: {
-        mode: ['css', 'legacy'],
-        before: '.pdf-page-break',
-        avoid: ['.stat-card', '.stat-grid', '.quote-card', '.vip-banner', '.sponsor-cluster', '.nps-gauge', '.chart-container', '.data-table', 'h2', 'h3']
-      }
-    };
+    window.print();
 
-    html2pdf().set(opt).from(document.body).save().then(() => {
-      // Cleanup: restore everything
-      document.body.classList.remove('pdf-mode');
+    // 4. Cleanup after print dialog closes
+    setTimeout(() => {
       document.querySelectorAll('.chart-print-img').forEach(img => img.remove());
-      canvases.forEach(c => c.style.display = '');
       if (btn) btn.textContent = 'Export PDF';
-    }).catch(err => {
-      console.error('PDF generation failed:', err);
-      document.body.classList.remove('pdf-mode');
-      document.querySelectorAll('.chart-print-img').forEach(img => img.remove());
-      canvases.forEach(c => c.style.display = '');
-      if (btn) btn.textContent = 'Export PDF';
-    });
-  }, 300);
+    }, 500);
+  }, 200);
 }
 </script>
 

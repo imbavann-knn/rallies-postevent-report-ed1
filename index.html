@@ -2167,6 +2167,53 @@ async function exportPDF() {
     // Brief tick to let cloned DOM settle + chart images render
     await new Promise(r => setTimeout(r, 200));
 
+    // ---- STEP 4b: Smart spacers — prevent page cuts mid-block ----
+    // A4 at 96dpi = 1123px tall. Walk every significant block in the
+    // render clone; if a block starts near the bottom of a page and
+    // would be split, inject padding above it to push it to the next page.
+    if (btn) btn.textContent = 'Optimising page breaks…';
+    const PAGE_H_PX = 1123; // A4 height at 96dpi (794 * 297/210)
+    const MARGIN_PX = 40;   // min space to leave at bottom before pushing
+    const rootTop = renderRoot.getBoundingClientRect().top;
+
+    // Selectors for blocks that should NOT be split across pages
+    const protectedSelectors = [
+      '.stat-grid', '.stat-card', '.vip-banner', '.quote-card',
+      '.sponsor-cluster', '.nps-gauge', '.chart-container',
+      '.data-table', '.photo-placeholder', '.photo-grid',
+      'h2', 'h3',
+      // Key styled divs (inline sections)
+      '[style*="border-radius:16px"]',
+      '[style*="border-radius:12px"]',
+      '[style*="border-radius:20px"]'
+    ];
+    const protectedEls = renderRoot.querySelectorAll(protectedSelectors.join(','));
+
+    protectedEls.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const elTop = rect.top - rootTop;
+      const elBottom = rect.bottom - rootTop;
+      const elHeight = rect.height;
+
+      // Skip tiny elements or elements taller than a full page (can't avoid split)
+      if (elHeight < 30 || elHeight > PAGE_H_PX * 0.85) return;
+
+      // Which page does this element start on?
+      const pageStart = Math.floor(elTop / PAGE_H_PX);
+      // Where does the next page boundary fall?
+      const nextPageBoundary = (pageStart + 1) * PAGE_H_PX;
+
+      // Would the element be split across the boundary?
+      if (elBottom > nextPageBoundary && (nextPageBoundary - elTop) < elHeight * 0.7) {
+        // It would be cut — add padding above to push it to the next page
+        const pushNeeded = nextPageBoundary - elTop + MARGIN_PX;
+        el.style.marginTop = (parseFloat(el.style.marginTop || 0) + pushNeeded) + 'px';
+      }
+    });
+
+    // One more tick for spacing to settle
+    await new Promise(r => setTimeout(r, 50));
+
     // ---- STEP 5: Capture the ENTIRE render root as one tall canvas ----
     if (btn) btn.textContent = 'Capturing pages…';
     const RENDER_W = 794;

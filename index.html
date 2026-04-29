@@ -2168,51 +2168,95 @@ async function exportPDF() {
     await new Promise(r => setTimeout(r, 200));
 
     // ---- STEP 4b: Smart spacers — prevent page cuts mid-block ----
-    // A4 at 96dpi = 1123px tall. Walk every significant block in the
-    // render clone; if a block starts near the bottom of a page and
-    // would be split, inject padding above it to push it to the next page.
+    // Two-pass approach: (1) protect headings by grouping with next sibling,
+    // (2) protect standalone blocks from being split.
     if (btn) btn.textContent = 'Optimising page breaks…';
     const PAGE_H_PX = 1123; // A4 height at 96dpi (794 * 297/210)
-    const MARGIN_PX = 40;   // min space to leave at bottom before pushing
+    const SAFE_ZONE = 100;  // if element starts within 100px of page bottom, push it
     const rootTop = renderRoot.getBoundingClientRect().top;
 
-    // Selectors for blocks that should NOT be split across pages
-    const protectedSelectors = [
-      '.stat-grid', '.stat-card', '.vip-banner', '.quote-card',
-      '.sponsor-cluster', '.nps-gauge', '.chart-container',
-      '.data-table', '.photo-placeholder', '.photo-grid',
-      'h2', 'h3',
-      // Key styled divs (inline sections)
-      '[style*="border-radius:16px"]',
-      '[style*="border-radius:12px"]',
-      '[style*="border-radius:20px"]'
-    ];
-    const protectedEls = renderRoot.querySelectorAll(protectedSelectors.join(','));
+    function getPos(el) {
+      const r = el.getBoundingClientRect();
+      return { top: r.top - rootTop, bottom: r.bottom - rootTop, height: r.height };
+    }
 
-    protectedEls.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const elTop = rect.top - rootTop;
-      const elBottom = rect.bottom - rootTop;
-      const elHeight = rect.height;
-
-      // Skip tiny elements or elements taller than a full page (can't avoid split)
-      if (elHeight < 30 || elHeight > PAGE_H_PX * 0.85) return;
-
-      // Which page does this element start on?
+    function wouldSplit(elTop, elBottom) {
       const pageStart = Math.floor(elTop / PAGE_H_PX);
-      // Where does the next page boundary fall?
-      const nextPageBoundary = (pageStart + 1) * PAGE_H_PX;
+      const boundary = (pageStart + 1) * PAGE_H_PX;
+      return elBottom > boundary;
+    }
 
-      // Would the element be split across the boundary?
-      if (elBottom > nextPageBoundary && (nextPageBoundary - elTop) < elHeight * 0.7) {
-        // It would be cut — add padding above to push it to the next page
-        const pushNeeded = nextPageBoundary - elTop + MARGIN_PX;
-        el.style.marginTop = (parseFloat(el.style.marginTop || 0) + pushNeeded) + 'px';
+    function pushToNextPage(el) {
+      const pos = getPos(el);
+      const pageStart = Math.floor(pos.top / PAGE_H_PX);
+      const boundary = (pageStart + 1) * PAGE_H_PX;
+      const gap = boundary - pos.top + 20; // 20px breathing room on new page
+      el.style.paddingTop = (parseFloat(el.style.paddingTop || 0) + gap) + 'px';
+    }
+
+    // --- PASS 1: Section headers ---
+    // A section header (h2/h3) near the bottom of a page should move to the next page
+    // along with the content that follows it. We check if the heading + its next
+    // ~200px of content would straddle a boundary.
+    renderRoot.querySelectorAll('h2, h3, .section-label').forEach(heading => {
+      const pos = getPos(heading);
+      if (pos.height < 5) return;
+      const distFromPageBottom = PAGE_H_PX - (pos.top % PAGE_H_PX);
+      // If heading is in the last 200px of a page, push it
+      if (distFromPageBottom < 200 && distFromPageBottom > 0) {
+        pushToNextPage(heading);
       }
     });
 
-    // One more tick for spacing to settle
-    await new Promise(r => setTimeout(r, 50));
+    // Let DOM settle after pass 1
+    await new Promise(r => setTimeout(r, 30));
+
+    // --- PASS 2: Protected blocks ---
+    // These should not be split across pages
+    const protectedSelectors = [
+      '.stat-grid', '.vip-banner', '.quote-card',
+      '.sponsor-cluster', '.nps-gauge', '.chart-container',
+      '.data-table', '.photo-placeholder',
+      '.sponsor-cluster-card',
+      // Styled containers (sponsor tiers, footfall block, etc.)
+      '[style*="border-radius:16px"]',
+      '[style*="border-radius:12px"]',
+      '[style*="border-radius:20px"]',
+      // Timeline and aspect bars
+      '.timeline', '.aspect-row',
+      // The two-col and three-col grids
+      '.two-col', '.three-col'
+    ];
+
+    renderRoot.querySelectorAll(protectedSelectors.join(',')).forEach(el => {
+      const pos = getPos(el);
+      // Skip tiny or page-sized+ elements
+      if (pos.height < 40 || pos.height > PAGE_H_PX * 0.8) return;
+
+      if (wouldSplit(pos.top, pos.bottom)) {
+        const distFromPageBottom = PAGE_H_PX - (pos.top % PAGE_H_PX);
+        // Only push if less than 50% of the block fits on current page
+        // (if >50% fits, it's better to let it flow than create blank space)
+        if (distFromPageBottom < pos.height * 0.5) {
+          pushToNextPage(el);
+        }
+      }
+    });
+
+    // Let DOM settle after pass 2
+    await new Promise(r => setTimeout(r, 30));
+
+    // --- PASS 3: Quote cards individually ---
+    // Quote cards are smaller but should never be cut mid-quote
+    renderRoot.querySelectorAll('.quote-card').forEach(el => {
+      const pos = getPos(el);
+      if (pos.height < 20) return;
+      if (wouldSplit(pos.top, pos.bottom)) {
+        pushToNextPage(el);
+      }
+    });
+
+    await new Promise(r => setTimeout(r, 20));
 
     // ---- STEP 5: Capture the ENTIRE render root as one tall canvas ----
     if (btn) btn.textContent = 'Capturing pages…';

@@ -2106,7 +2106,7 @@ new Chart(document.getElementById('chartReachBreakdown'), {
 
 // ================================================================
 // EXPORT PDF — html2canvas + jsPDF (CEO methodology)
-// Page-by-page rasterization at A4 dimensions
+// Continuous-flow: render all content as one strip, slice into A4
 // ================================================================
 async function exportPDF() {
   const btn = document.querySelector('.export-btn');
@@ -2148,85 +2148,91 @@ async function exportPDF() {
     await document.fonts.ready;
 
     // ---- STEP 4: Build offscreen render root ----
+    if (btn) btn.textContent = 'Building layout…';
     let renderRoot = document.getElementById('pdf-render-root');
     if (renderRoot) renderRoot.remove();
     renderRoot = document.createElement('div');
     renderRoot.id = 'pdf-render-root';
     document.body.appendChild(renderRoot);
 
-    // Clone all sections into render root at A4 width
+    // Clone all sections into render root — continuous flow, no page breaks
     const sections = document.querySelectorAll('section');
     sections.forEach(sec => {
       const clone = sec.cloneNode(true);
+      // Reduce padding for tighter PDF layout
+      clone.style.padding = '2rem 0';
       renderRoot.appendChild(clone);
     });
 
     // Brief tick to let cloned DOM settle + chart images render
-    await new Promise(r => setTimeout(r, 100));
+    await new Promise(r => setTimeout(r, 200));
 
-    // ---- STEP 5: Initialize jsPDF (A4 portrait, mm units) ----
+    // ---- STEP 5: Capture the ENTIRE render root as one tall canvas ----
+    if (btn) btn.textContent = 'Capturing pages…';
+    const RENDER_W = 794;
+    const SCALE = 2;
+
+    const fullCanvas = await html2canvas(renderRoot, {
+      scale: SCALE,
+      useCORS: true,
+      backgroundColor: null,
+      width: RENDER_W,
+      windowWidth: RENDER_W,
+      logging: false,
+      removeContainer: false
+    });
+
+    // ---- STEP 6: Slice into A4 pages ----
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-    const A4_W = 210; // mm
-    const A4_H = 297; // mm
-    const RENDER_W = 794; // px (A4 at 96dpi)
-    const SCALE = 2;  // 2x for print-quality raster
+    const A4_W = 210;
+    const A4_H = 297;
+    const pxPerMm = (RENDER_W * SCALE) / A4_W;
+    const pageHeightPx = A4_H * pxPerMm;
+    const imgW = fullCanvas.width;
+    const imgH = fullCanvas.height;
+    const totalPages = Math.ceil(imgH / pageHeightPx);
 
-    // ---- STEP 6: Rasterize section by section ----
-    const clonedSections = renderRoot.querySelectorAll('section');
-    let firstPage = true;
-    const totalSections = clonedSections.length;
+    if (btn) btn.textContent = `Slicing ${totalPages} pages…`;
 
-    for (let i = 0; i < totalSections; i++) {
-      const secEl = clonedSections[i];
-      if (btn) btn.textContent = `Rendering section ${i + 1} of ${totalSections}…`;
+    for (let p = 0; p < totalPages; p++) {
+      if (p > 0) pdf.addPage();
+      if (btn) btn.textContent = `Rendering page ${p + 1} of ${totalPages}…`;
 
-      // Capture section with html2canvas (CEO methodology settings)
-      const canvas = await html2canvas(secEl, {
-        scale: SCALE,
-        useCORS: true,
-        backgroundColor: null,   // preserve element's own bg (Pitfall: full-bleed)
-        width: RENDER_W,
-        windowWidth: RENDER_W,
-        logging: false,
-        removeContainer: false
-      });
+      const srcY = p * pageHeightPx;
+      const srcH = Math.min(pageHeightPx, imgH - srcY);
+      const destH = srcH / pxPerMm;
 
-      // Calculate how many A4 pages this section needs
-      const imgW = canvas.width;
-      const imgH = canvas.height;
-      const pxPerMm = (RENDER_W * SCALE) / A4_W;
-      const pageHeightPx = A4_H * pxPerMm;
-      const totalPages = Math.ceil(imgH / pageHeightPx);
+      // Create a page-sized canvas
+      const pageCanvas = document.createElement('canvas');
+      pageCanvas.width = imgW;
+      pageCanvas.height = Math.round(pageHeightPx); // always full A4 height
+      const ctx = pageCanvas.getContext('2d');
 
-      // Slice the canvas into A4-height pages
-      for (let p = 0; p < totalPages; p++) {
-        if (!firstPage) pdf.addPage();
-        firstPage = false;
+      // Fill with white first (handles last page that may be shorter)
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
 
-        const srcY = p * pageHeightPx;
-        const srcH = Math.min(pageHeightPx, imgH - srcY);
-        const destH = (srcH / pxPerMm); // in mm
-
-        // Create a slice canvas for this page
-        const pageCanvas = document.createElement('canvas');
-        pageCanvas.width = imgW;
-        pageCanvas.height = Math.round(srcH);
-        const ctx = pageCanvas.getContext('2d');
-
-        // Fill with section background color for full-bleed
-        const bgColor = getComputedStyle(secEl).backgroundColor;
-        if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
-          ctx.fillStyle = bgColor;
-          ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-        }
-
-        ctx.drawImage(canvas, 0, Math.round(srcY), imgW, Math.round(srcH), 0, 0, imgW, Math.round(srcH));
-
-        // Add to PDF — JPEG 0.92 quality (good balance of quality vs size)
-        const imgData = pageCanvas.toDataURL('image/jpeg', 0.92);
-        pdf.addImage(imgData, 'JPEG', 0, 0, A4_W, destH);
+      // Detect background color at the midpoint of this slice
+      // by sampling from the full canvas
+      const sampleY = Math.min(Math.round(srcY + 10), imgH - 1);
+      const sampleData = fullCanvas.getContext('2d').getImageData(Math.round(imgW / 2), sampleY, 1, 1).data;
+      const r = sampleData[0], g = sampleData[1], b = sampleData[2];
+      // If the background is dark (likely a dark section), fill with that color
+      if (r < 40 && g < 40 && b < 40) {
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
       }
+
+      // Draw the slice
+      ctx.drawImage(fullCanvas,
+        0, Math.round(srcY), imgW, Math.round(srcH),
+        0, 0, imgW, Math.round(srcH)
+      );
+
+      // Add to PDF — JPEG 0.92 for quality
+      const imgData = pageCanvas.toDataURL('image/jpeg', 0.92);
+      pdf.addImage(imgData, 'JPEG', 0, 0, A4_W, A4_H);
     }
 
     // ---- STEP 7: Save ----
